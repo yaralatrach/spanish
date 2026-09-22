@@ -23,9 +23,13 @@ Review ladder: 25 min → 1 day → 3 days → 1 week → 2 weeks → 1 month.
    push` after `supabase link`, or paste the SQL into the dashboard SQL editor.
 2. Copy `.env.example` to `.env.local` and fill in the two Supabase values from
    Project Settings → API.
-3. Seed the curriculum, once:
-   `SUPABASE_URL=... SUPABASE_SERVICE_ROLE_KEY=... node scripts/seed.mjs`
-4. `npm install && npm run dev`
+3. `npm install`
+4. Seed the curriculum, once: `npm run seed`
+5. `npm run dev`
+
+Every command works the same in PowerShell, CMD, Git Bash and a Unix shell —
+`npm run seed` reads `.env.local` itself rather than needing exported
+variables, which differ between shells.
 
 ## The word list
 
