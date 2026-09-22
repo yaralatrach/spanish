@@ -17,6 +17,11 @@ forced daily journal gate, and handwritten production tasks.
 
 Review ladder: 25 min → 1 day → 3 days → 1 week → 2 weeks → 1 month.
 
+Picking and stamping the day's words happens inside Postgres, in
+`serve_daily_words`, so a refresh mid-introduction re-shows the same words
+rather than handing out a second batch. Words already established through free
+writing are skipped rather than taught.
+
 ## Setup
 
 1. Create a Supabase project and apply `supabase/migrations/` — `supabase db

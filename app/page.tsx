@@ -1,5 +1,7 @@
+import { DailyWords } from "@/app/components/DailyWords";
 import { JournalGate } from "@/app/components/JournalGate";
 import { PlacementTest } from "@/app/components/PlacementTest";
+import { serveWords } from "@/app/lib/actions";
 import { db } from "@/lib/supabase";
 import { todayInMadrid } from "@/lib/today";
 
@@ -24,15 +26,9 @@ export default async function Home() {
 
   if (!profile?.placement_completed_at) return <PlacementTest />;
 
-  return (
-    <div className="flex flex-col gap-3">
-      <h1 className="text-2xl font-semibold">Diario guardado</h1>
-      <p className="text-neutral-600">
-        Nivel actual: <strong>{profile.level}</strong>
-      </p>
-      <p className="text-sm text-neutral-500">
-        Las palabras del día todavía no están listas.
-      </p>
-    </div>
-  );
+  // Only reached once the gate is written and the level is known, so serving
+  // here cannot stamp words on a day she has not actually started.
+  const words = await serveWords();
+
+  return <DailyWords words={words} level={profile.level} />;
 }

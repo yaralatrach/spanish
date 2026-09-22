@@ -4,6 +4,9 @@ import { revalidatePath } from "next/cache";
 
 import { db } from "@/lib/supabase";
 import { MIN_JOURNAL_CHARS, type ActionResult } from "@/lib/journal";
+import { dueAfter } from "@/lib/srs";
+import { NEW_WORDS_PER_DAY } from "@/lib/curriculum";
+import type { CurriculumWord } from "@/lib/words";
 import { todayInMadrid } from "@/lib/today";
 import {
   PLACEMENT_QUESTIONS,
@@ -148,6 +151,77 @@ export async function submitPlacement(
   );
   if (profileError) return { ok: false, error: profileError.message };
 
+  revalidatePath("/");
+  return { ok: true };
+}
+
+/**
+ * The day's new words. Picking and stamping happens in one statement inside
+ * Postgres, so refreshing mid-introduction re-shows the same words rather than
+ * handing out a second batch.
+ */
+export async function serveWords(): Promise<CurriculumWord[]> {
+  const { data, error } = await db.rpc("serve_daily_words", {
+    p_day: todayInMadrid(),
+    p_count: NEW_WORDS_PER_DAY,
+  });
+  if (error) throw new Error(error.message);
+  return (data ?? []) as CurriculumWord[];
+}
+
+/**
+ * A click is weaker evidence than production: she is being asked about a word
+ * the app just put in front of her. So it records the click, but never
+ * overwrites a word already established through free writing.
+ */
+export async function markWord(
+  wordId: number,
+  known: boolean,
+): Promise<ActionResult> {
+  const now = new Date().toISOString();
+
+  const { data: existing } = await db
+    .from("word_progress")
+    .select("known_source")
+    .eq("word_id", wordId)
+    .maybeSingle();
+
+  if (existing?.known_source === "free_writing") return { ok: true };
+
+  const { error } = await db.from("word_progress").upsert(
+    {
+      word_id: wordId,
+      status: known ? "known" : "learning",
+      known_source: known ? "click" : null,
+      first_known_at: known ? now : null,
+      due_at: known ? null : dueAfter(0).toISOString(),
+      srs_step: 0,
+      updated_at: now,
+    },
+    { onConflict: "word_id" },
+  );
+
+  if (error) return { ok: false, error: error.message };
+  revalidatePath("/");
+  return { ok: true };
+}
+
+/** Family members below the cutoff have no words row, so they record here. */
+export async function markDerived(
+  lemma: string,
+  rootWordId: number,
+  known: boolean,
+): Promise<ActionResult> {
+  const { error } = await db.from("derived_progress").upsert(
+    {
+      lemma,
+      root_word_id: rootWordId,
+      status: known ? "known" : "unknown",
+      updated_at: new Date().toISOString(),
+    },
+    { onConflict: "lemma" },
+  );
+  if (error) return { ok: false, error: error.message };
   revalidatePath("/");
   return { ok: true };
 }
