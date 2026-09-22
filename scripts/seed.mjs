@@ -69,8 +69,21 @@ const wordRows = words.map((w) => ({
   pos: w.pos,
 }));
 
+/**
+ * Strips the five vowel accents and the diaeresis, leaving ñ alone: it is its
+ * own letter, not an accented n, and folding it would collide año with ano.
+ * Must stay in step with foldAccents() in app/lib/actions.ts and the
+ * translate() in the migration.
+ */
+const fold = (form) =>
+  form.replace(/[áéíóúü]/g, (c) => ({ á: "a", é: "e", í: "i", ó: "o", ú: "u", ü: "u" })[c] ?? c);
+
 const formRows = [];
-for (const w of words) for (const form of w.forms) formRows.push({ form, word_id: w.rank });
+for (const w of words) {
+  for (const form of w.forms) {
+    formRows.push({ form, form_folded: fold(form), word_id: w.rank });
+  }
+}
 
 await inBatches("words", wordRows, 1000);
 await inBatches("word_forms", formRows, 2000);

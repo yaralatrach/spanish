@@ -50,14 +50,25 @@ blended at equal weight per million.
 90.2% of subtitle tokens resolve to a lemma. Note GSD's CC BY-SA: the derived
 list inherits share-alike.
 
+### Matching
+
+Exact match first, so an accent that was typed still distinguishes the word.
+Tokens that match nothing fall back to accent-insensitive matching, because on
+real input a missing accent is the commonest miss by some margin — `reunion`,
+`presentacion` and `tramites` all failed on the first real journal entry for
+that reason alone. Typing `reunion` is a spelling slip, not evidence the word
+is unknown. `ñ` is never folded: it is its own letter, and folding it would
+collide `año` with `ano`.
+
 ### Known gap
 
 Forms are only those the treebanks actually attested, which is fine for nouns
 (median 2 — singular and plural) but thin for verbs (median 9 against a ~50-form
-paradigm). So `cociné` does not currently match `cocinar`. This needs a
-rule-based conjugator, which the `conjugations` column wants anyway for the
-word-introduction UI. Until then the evidence rule under-credits, which is the
-safe direction to be wrong in: a missed word simply stays up for review.
+paradigm). So `cociné` does not match `cocinar`, and `dibuje` does not match
+`dibujar`. This needs a rule-based conjugator, which the `conjugations` column
+wants anyway for the word-introduction UI. Until then the evidence rule
+under-credits, which is the safe direction to be wrong in: a missed word simply
+stays up for review.
 
 ## Access model
 

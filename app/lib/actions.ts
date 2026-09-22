@@ -54,18 +54,35 @@ async function recordFreeWritingEvidence(text: string): Promise<void> {
   const tokens = tokenize(text);
   if (tokens.length === 0) return;
 
-  const { data: matches, error } = await db
+  // Exact first, so an accent she did type still distinguishes the word.
+  const { data: exact, error } = await db
     .from("word_forms")
-    .select("word_id")
+    .select("form, word_id")
     .in("form", tokens);
 
-  if (error || !matches || matches.length === 0) return;
+  if (error) return;
 
-  const wordIds = [...new Set(matches.map((m) => m.word_id as number))];
+  const wordIds = new Set((exact ?? []).map((m) => m.word_id as number));
+
+  // Only tokens that matched nothing fall back to accent-insensitive matching.
+  // Typing "reunion" for "reunión" is a spelling slip, not evidence she does
+  // not know the word, and on real input that slip is the commonest miss.
+  const matchedForms = new Set((exact ?? []).map((m) => m.form as string));
+  const unmatched = tokens.filter((t) => !matchedForms.has(t));
+
+  if (unmatched.length > 0) {
+    const { data: folded } = await db
+      .from("word_forms")
+      .select("word_id")
+      .in("form_folded", unmatched.map(foldAccents));
+    for (const row of folded ?? []) wordIds.add(row.word_id as number);
+  }
+
+  if (wordIds.size === 0) return;
   const now = new Date().toISOString();
 
   await db.from("word_progress").upsert(
-    wordIds.map((word_id) => ({
+    [...wordIds].map((word_id) => ({
       word_id,
       status: "known",
       known_source: "free_writing",
@@ -76,10 +93,22 @@ async function recordFreeWritingEvidence(text: string): Promise<void> {
   );
 }
 
-/** Lowercase word tokens, accents preserved (canto and cantó are different). */
+/** Lowercase word tokens, accents preserved: exact matching runs on these. */
 function tokenize(text: string): string[] {
   const matched = text.toLowerCase().match(/[\p{L}\p{M}]+/gu);
   return matched ? [...new Set(matched)] : [];
+}
+
+/**
+ * Strips the five vowel accents and the diaeresis. ñ is left alone: it is its
+ * own letter rather than an accented n, and folding it would collide año with
+ * ano. Must stay in step with the SQL translate() in the migration.
+ */
+function foldAccents(form: string): string {
+  return form.replace(
+    /[áéíóúü]/g,
+    (c) => ({ á: "a", é: "e", í: "i", ó: "o", ú: "u", ü: "u" })[c] ?? c,
+  );
 }
 
 export async function submitPlacement(
