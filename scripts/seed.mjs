@@ -68,6 +68,7 @@ const wordRows = words.map((w) => ({
   lemma: w.lemma,
   pos: w.pos,
   conjugations: w.conjugations ?? [],
+  family: w.family ?? [],
 }));
 
 /**

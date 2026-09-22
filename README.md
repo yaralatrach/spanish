@@ -93,6 +93,32 @@ is denied everything and the database is unreachable from the client.
 App access is a shared password: set `APP_PASSWORD` and visit `/?p=<password>`
 once to set the cookie. Leave it unset locally and the gate is off.
 
+### Lemma families
+
+`scripts/build-families.mjs` groups roots with their derivations — `fruta` with
+`frutal`, `frutería`, `frutero`. Nothing in the corpora records that one word
+derives from another, so this is *constructed* from Spanish derivational
+suffixes rather than looked up, and is approximate by design. Candidates are
+kept only if they occur at least 50 times in the subtitle corpus, which keeps
+out invented words; the lexicon only filters candidates the rules construct, so
+the proper nouns and typos in that frequency band can never be proposed.
+
+1,091 roots carry a family, 1,518 members in total, 1,100 of them below the
+curriculum cutoff. Spot-checking around fifty found roughly one questionable
+member in twenty (`marcha` → `marchal`, a surname rather than a word).
+Irregular derivations are missed entirely — `pan` → `panadería` and `pelo` →
+`peluquería` do not follow the regular patterns — which is the intended
+direction to fail in.
+
+Filtering members that appear as `PROPN` in the treebanks was tried and
+rejected: it would have removed `contar` → `contador`, `libro` → `librería` and
+`broma` → `bromista`, which are tagged that way only because they occur inside
+institution names.
+
+Members below the cutoff are display context. They are not in `word_forms`, so
+writing `frutería` credits nothing yet — crediting them needs a `words` row,
+which is a decision for the word-introduction UI rather than a schema guess now.
+
 ## Deliberate omissions
 
 - **No OCR.** Tesseract scores roughly 46% at word level on handwriting, which
