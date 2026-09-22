@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { db } from "@/lib/supabase";
 import { MIN_JOURNAL_CHARS, type ActionResult } from "@/lib/journal";
 import { dueAfter } from "@/lib/srs";
-import { NEW_WORDS_PER_DAY } from "@/lib/curriculum";
+import { NEW_WORDS_PER_DAY, SWEEP_BATCH } from "@/lib/curriculum";
 import type { CurriculumWord } from "@/lib/words";
 import { todayInMadrid } from "@/lib/today";
 import {
@@ -225,8 +225,6 @@ export async function markDerived(
   revalidatePath("/");
   return { ok: true };
 }
-
-export const SWEEP_BATCH = 100;
 
 /** The next batch of never-assessed words, in frequency order. */
 export async function sweepBatch(afterRank: number): Promise<CurriculumWord[]> {
