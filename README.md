@@ -119,6 +119,42 @@ Members below the cutoff are display context. They are not in `word_forms`, so
 writing `frutería` credits nothing yet — crediting them needs a `words` row,
 which is a decision for the word-introduction UI rather than a schema guess now.
 
+### Audit against hand-reviewed data
+
+Mark Davies' argument for the Corpus del Español is that large web corpora are
+auto-tagged and never corrected, so their lemma lists fill with junk. Checked
+against his own published data for Spanish `s-` words, that is accurate: in
+Sketch Engine's verb list, 51.6% of the top 500 lemmas are flagged as problems,
+rising to 99% beyond rank 3,000.
+
+His lists are hand-reviewed, so they double as a reference to audit this
+curriculum against. Of its 308 `s-` lemmas tagged noun, verb, adjective or
+adverb:
+
+| | |
+| --- | --- |
+| Confirmed correct by his review | 285 (92.5%) |
+| Flagged by him as problems | 14 (4.5%) |
+| Absent from his lists | 9 (2.9%) |
+
+The gap between this and Sketch Engine is mostly down to source: AnCora and GSD
+are hand-annotated treebanks, not auto-tagged web text. The flagged remainder
+was real, though, and `scripts/clean-curriculum.mjs` acts on it — 16 non-words
+removed (abbreviated titles, bare letters, `$`, Catalan `i`). `a`, `y`, `o`,
+`e` and `u` are equally short and were kept: they are real function words.
+
+The nine "absent" entries were all participle-adjectives, which his review
+treats as verb forms rather than lemmas. They are linked to their verb rather
+than deleted, because `divertido`, `pesado`, `querido` and `aburrido` mean
+things their verbs do not, and 147 such links exist.
+
+What this audit cannot reach is the opposite failure: a word absent from the
+treebanks cannot enter the curriculum however common it is in speech. `zumo`
+and `enfadar` are both missing for that reason despite being ordinary
+Peninsular vocabulary — `enfadar` and `enfadado` together outnumber `enojar` in
+the subtitle corpus. A broad hand-lemmatised corpus would fix that; the
+treebanks cannot.
+
 ## Deliberate omissions
 
 - **No OCR.** Tesseract scores roughly 46% at word level on handwriting, which
