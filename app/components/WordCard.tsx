@@ -49,6 +49,18 @@ export function WordCard({ word }: { word: CurriculumWord }) {
         <span className="text-xs text-neutral-400">nº {word.rank}</span>
       </header>
 
+      {word.definition_es && (
+        <p className="mt-3 text-[15px] leading-relaxed text-neutral-800">
+          {word.definition_es}
+        </p>
+      )}
+
+      {word.example_es && (
+        <p className="mt-2 border-l-2 border-neutral-200 pl-3 text-[15px] italic text-neutral-600">
+          {word.example_es}
+        </p>
+      )}
+
       {word.participle_of && (
         <p className="mt-1 text-sm text-neutral-500">
           participio de <strong>{word.participle_of}</strong>

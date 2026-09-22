@@ -70,6 +70,8 @@ const wordRows = words.map((w) => ({
   conjugations: w.conjugations ?? [],
   family: w.family ?? [],
   participle_of: w.participleOf ?? null,
+  definition_es: w.definition ?? null,
+  example_es: w.example ?? null,
 }));
 
 /**

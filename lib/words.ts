@@ -23,6 +23,8 @@ export type CurriculumWord = {
   conjugations: Conjugations | unknown[];
   family: FamilyMember[];
   participle_of: string | null;
+  definition_es: string | null;
+  example_es: string | null;
 };
 
 export const POS_LABEL: Record<string, string> = {
