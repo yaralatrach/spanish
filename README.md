@@ -60,15 +60,29 @@ that reason alone. Typing `reunion` is a spelling slip, not evidence the word
 is unknown. `ñ` is never folded: it is its own letter, and folding it would
 collide `año` with `ano`.
 
-### Known gap
+### Verb paradigms
 
-Forms are only those the treebanks actually attested, which is fine for nouns
-(median 2 — singular and plural) but thin for verbs (median 9 against a ~50-form
-paradigm). So `cociné` does not match `cocinar`, and `dibuje` does not match
-`dibujar`. This needs a rule-based conjugator, which the `conjugations` column
-wants anyway for the word-introduction UI. Until then the evidence rule
-under-credits, which is the safe direction to be wrong in: a missed word simply
-stays up for review.
+The corpora only attest the forms they happened to contain — a median of 10 per
+verb against a ~50-form paradigm — so `cociné` did not match `cocinar` and
+`dibuje` did not match `dibujar`. `scripts/build-conjugations.mjs` generates
+the full paradigm with
+[@jirimracek/conjugate-esp](https://www.npmjs.com/package/@jirimracek/conjugate-esp),
+in `castellano` region so vosotros forms are present, taking verbs from 10.5 to
+54.4 forms each. It also writes the structured `conjugations` the
+word-introduction UI reads.
+
+Validated against the attested forms before adopting it: the library recognises
+98.6% of the curriculum's verbs and reproduces 93.2% of the forms the corpora
+actually contained. The shortfall is almost entirely corpus typos (`haía`,
+`podel`), clitic-attached forms (`véase`), and nouns homographic with verbs
+(`poderes`, `deberes`). Two real gaps were closed by hand: participles are
+inflected for gender and number, which the library returns only in the
+masculine singular, and `hay` is added to `haber`.
+
+The 11 lemmas no conjugator recognises — `hagar`, `llever`, `confunder` and so
+on — were treebank lemmatisation errors rather than vocabulary, and are dropped.
+Ranks are left gapped rather than renumbered, since serving order only reads
+`order by rank`.
 
 ## Access model
 

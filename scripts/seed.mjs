@@ -38,14 +38,14 @@ if (!url || !key) {
 
 const words = JSON.parse(readFileSync(new URL("../data/words.json", import.meta.url)));
 
-async function insert(table, rows) {
+async function insert(table, rows, resolution) {
   const res = await fetch(`${url.replace(/\/$/, "")}/rest/v1/${table}`, {
     method: "POST",
     headers: {
       apikey: key,
       Authorization: `Bearer ${key}`,
       "Content-Type": "application/json",
-      Prefer: "return=minimal,resolution=ignore-duplicates",
+      Prefer: `return=minimal,resolution=${resolution}`,
     },
     body: JSON.stringify(rows),
   });
@@ -54,9 +54,9 @@ async function insert(table, rows) {
   }
 }
 
-async function inBatches(table, rows, size) {
+async function inBatches(table, rows, size, resolution = "ignore-duplicates") {
   for (let i = 0; i < rows.length; i += size) {
-    await insert(table, rows.slice(i, i + size));
+    await insert(table, rows.slice(i, i + size), resolution);
     process.stdout.write(`  ${table}: ${Math.min(i + size, rows.length)}/${rows.length}\r`);
   }
   process.stdout.write("\n");
@@ -67,6 +67,7 @@ const wordRows = words.map((w) => ({
   rank: w.rank,
   lemma: w.lemma,
   pos: w.pos,
+  conjugations: w.conjugations ?? [],
 }));
 
 /**
@@ -85,7 +86,9 @@ for (const w of words) {
   }
 }
 
-await inBatches("words", wordRows, 1000);
+// merge-duplicates so re-running picks up regenerated conjugations rather
+// than silently skipping rows that already exist.
+await inBatches("words", wordRows, 1000, "merge-duplicates");
 await inBatches("word_forms", formRows, 2000);
 
 console.log(`Seeded ${wordRows.length} lemmas and ${formRows.length} forms.`);
