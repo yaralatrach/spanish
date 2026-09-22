@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+:root {
+  /* System stack: no webfont fetch, so builds work offline and in CI. */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+  font-family: var(--font-sans);
+}
