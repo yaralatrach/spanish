@@ -225,3 +225,76 @@ export async function markDerived(
   revalidatePath("/");
   return { ok: true };
 }
+
+export const SWEEP_BATCH = 100;
+
+/** The next batch of never-assessed words, in frequency order. */
+export async function sweepBatch(afterRank: number): Promise<CurriculumWord[]> {
+  const { data, error } = await db.rpc("sweep_batch", {
+    p_after_rank: afterRank,
+    p_count: SWEEP_BATCH,
+  });
+  if (error) throw new Error(error.message);
+  return (data ?? []) as CurriculumWord[];
+}
+
+/**
+ * Records a whole sweep batch at once. Unknown words enter review at the first
+ * rung; known ones are settled. A word she has already produced in her own
+ * writing is left alone, since that is the stronger evidence.
+ */
+export async function submitSweep(
+  unknownIds: number[],
+  allIds: number[],
+  lastRank: number,
+): Promise<ActionResult> {
+  const now = new Date().toISOString();
+  const unknown = new Set(unknownIds);
+
+  const { data: produced } = await db
+    .from("word_progress")
+    .select("word_id")
+    .eq("known_source", "free_writing")
+    .in("word_id", allIds);
+
+  const settled = new Set((produced ?? []).map((r) => r.word_id as number));
+  const rows = allIds
+    .filter((id) => !settled.has(id))
+    .map((id) => ({
+      word_id: id,
+      status: unknown.has(id) ? "learning" : "known",
+      known_source: unknown.has(id) ? null : "click",
+      first_known_at: unknown.has(id) ? null : now,
+      due_at: unknown.has(id) ? dueAfter(0).toISOString() : null,
+      srs_step: 0,
+      updated_at: now,
+    }));
+
+  if (rows.length > 0) {
+    const { error } = await db
+      .from("word_progress")
+      .upsert(rows, { onConflict: "word_id" });
+    if (error) return { ok: false, error: error.message };
+  }
+
+  const { error: profileError } = await db
+    .from("profile")
+    .upsert({ id: true, sweep_position: lastRank }, { onConflict: "id" });
+  if (profileError) return { ok: false, error: profileError.message };
+
+  revalidatePath("/");
+  return { ok: true };
+}
+
+/** Ends the sweep, so the daily loop takes over from the next visit. */
+export async function finishSweep(): Promise<ActionResult> {
+  const { error } = await db
+    .from("profile")
+    .upsert(
+      { id: true, sweep_completed_at: new Date().toISOString() },
+      { onConflict: "id" },
+    );
+  if (error) return { ok: false, error: error.message };
+  revalidatePath("/");
+  return { ok: true };
+}

@@ -5,14 +5,20 @@ forced daily journal gate, and handwritten production tasks.
 
 ## How a day works
 
+0. **Sweep, once.** The placement test sets a level, but new words are served
+   from rank 1 regardless, so someone placing at B1 would spend weeks clicking
+   through words they have known for years. The sweep shows 100 words at a
+   time, default known, tapping only the ones that are not — far fewer taps at
+   the top of a frequency list than the reverse. It stays evidence-based:
+   nothing is inferred from the level, she still says so for every word.
 1. **Journal gate.** 100+ characters in Spanish. Nothing else opens until it is
    written. Any curriculum word used here counts as known — unprompted
    production is stronger evidence than clicking "I know this" on a word the
    app just showed you, so it overrides an earlier "unknown" click.
-2. **Review** of words that are due, before any new ones.
-3. **10 new words**, grouped by lemma family and theme rather than served in
+3. **Review** of words that are due, before any new ones.
+4. **10 new words**, grouped by lemma family and theme rather than served in
    isolation.
-4. **Four production tasks per word**, on paper: English definition, explain it
+5. **Four production tasks per word**, on paper: English definition, explain it
    in Spanish, use it in a sentence, then photograph the page to close the day.
 
 Review ladder: 25 min → 1 day → 3 days → 1 week → 2 weeks → 1 month.
