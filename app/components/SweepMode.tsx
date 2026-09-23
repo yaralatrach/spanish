@@ -97,7 +97,7 @@ export function SweepMode({
               type="button"
               onClick={() => toggle(word.id)}
               title={POS_LABEL[word.pos] ?? word.pos}
-              className={`rounded-lg border px-3 py-1.5 text-sm transition-colors ${
+              className={`min-h-11 rounded-lg border px-3 py-2 text-sm transition-colors ${
                 flagged
                   ? "border-neutral-900 bg-neutral-900 text-white"
                   : "border-neutral-200 text-neutral-700 hover:border-neutral-400"
@@ -114,7 +114,7 @@ export function SweepMode({
           type="button"
           onClick={advance}
           disabled={pending}
-          className="rounded-lg bg-neutral-900 px-5 py-2 font-medium text-white disabled:opacity-40"
+          className="min-h-11 w-full rounded-lg bg-neutral-900 px-5 py-2.5 font-medium text-white disabled:opacity-40 sm:w-auto"
         >
           {pending ? "Guardando…" : "Siguientes 100"}
         </button>
@@ -122,7 +122,7 @@ export function SweepMode({
           type="button"
           onClick={stop}
           disabled={pending}
-          className="text-sm text-neutral-500 underline underline-offset-2"
+          className="py-2 text-sm text-neutral-500 underline underline-offset-2"
         >
           Ya empiezan a costarme — terminar aquí
         </button>

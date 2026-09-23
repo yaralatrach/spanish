@@ -48,7 +48,7 @@ export function PlacementTest() {
                   onClick={() =>
                     setAnswers((prev) => ({ ...prev, [question.id]: option }))
                   }
-                  className={`rounded-lg border px-3 py-1.5 text-sm ${
+                  className={`min-h-11 rounded-lg border px-4 py-2 text-sm ${
                     selected
                       ? "border-neutral-900 bg-neutral-900 text-white"
                       : "border-neutral-300 hover:border-neutral-500"
@@ -62,14 +62,14 @@ export function PlacementTest() {
         </fieldset>
       ))}
 
-      <div className="flex items-center justify-between text-sm">
+      <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
         <span className="text-neutral-500">
           {answered} de {PLACEMENT_QUESTIONS.length}
         </span>
         <button
           type="submit"
           disabled={pending || !complete}
-          className="rounded-lg bg-neutral-900 px-5 py-2 font-medium text-white disabled:opacity-40"
+          className="min-h-11 w-full rounded-lg bg-neutral-900 px-5 py-2.5 font-medium text-white disabled:opacity-40 sm:w-auto"
         >
           {pending ? "Calculando…" : "Terminar"}
         </button>

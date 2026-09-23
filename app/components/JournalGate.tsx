@@ -41,7 +41,7 @@ export function JournalGate() {
         className="w-full resize-y rounded-lg border border-neutral-300 p-3 text-base leading-relaxed outline-none focus:border-neutral-900"
       />
 
-      <div className="flex items-center justify-between text-sm">
+      <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
         <span className={remaining > 0 ? "text-neutral-500" : "text-green-700"}>
           {remaining > 0
             ? `Faltan ${remaining} caracteres`
@@ -50,7 +50,7 @@ export function JournalGate() {
         <button
           type="submit"
           disabled={pending || remaining > 0}
-          className="rounded-lg bg-neutral-900 px-5 py-2 font-medium text-white disabled:opacity-40"
+          className="min-h-11 w-full rounded-lg bg-neutral-900 px-5 py-2.5 font-medium text-white disabled:opacity-40 sm:w-auto"
         >
           {pending ? "Guardando…" : "Guardar y continuar"}
         </button>
