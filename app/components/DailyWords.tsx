@@ -2,9 +2,11 @@
 
 import { useState } from "react";
 
+import { Completar, Producir, Reconocer } from "@/app/components/Passes";
+import { PassShell, Primary } from "@/app/components/PassShell";
 import { WordCard } from "@/app/components/WordCard";
-import { completeDay } from "@/app/lib/actions";
-import type { CurriculumWord } from "@/lib/words";
+import { completeDay, setPassIndex } from "@/app/lib/actions";
+import type { PracticeWord } from "@/lib/practice";
 
 const TASKS = [
   "Escribe la definición en inglés.",
@@ -13,18 +15,53 @@ const TASKS = [
   "Haz una foto de la hoja para cerrar el día.",
 ];
 
+const TOTAL_PASSES = 5;
+
 export function DailyWords({
   words,
   level,
   alreadyDone,
+  initialPass,
+  initiallyNew,
 }: {
-  words: CurriculumWord[];
+  words: PracticeWord[];
   level: string | null;
   alreadyDone: boolean;
+  initialPass: number;
+  initiallyNew: number[];
 }) {
-  const [decided, setDecided] = useState<Set<number>>(new Set());
+  const [pass, setPass] = useState(initialPass);
+  const [decided, setDecided] = useState<Set<number>>(
+    () => new Set(initiallyNew),
+  );
+  const [seen, setSeen] = useState<Set<number>>(() => new Set(initiallyNew));
   const [done, setDone] = useState(alreadyDone);
   const [closing, setClosing] = useState(false);
+
+  // Only what she said she did not know gets practised. Knowing seven of ten
+  // means practising three, which is the point of the sweep and the journal
+  // evidence as well.
+  const unknown = words.filter((w) => decided.has(w.id));
+
+  function go(next: number) {
+    setPass(next);
+    void setPassIndex(next);
+    if (typeof window !== "undefined") window.scrollTo({ top: 0 });
+  }
+
+  /** Skips forward over any pass with nothing eligible in it. */
+  function advanceFrom(current: number) {
+    let next = current + 1;
+    while (next < TOTAL_PASSES - 1 && eligible(next).length === 0) next += 1;
+    go(next);
+  }
+
+  function eligible(index: number): PracticeWord[] {
+    if (index === 1) return unknown.filter((w) => w.definition_es);
+    if (index === 2) return unknown.filter((w) => w.cloze);
+    if (index === 3) return unknown;
+    return [];
+  }
 
   if (words.length === 0) {
     return (
@@ -44,7 +81,83 @@ export function DailyWords({
     );
   }
 
-  const remaining = words.length - decided.size;
+  if (pass === 1) {
+    return (
+      <Reconocer
+        words={eligible(1)}
+        batch={words}
+        position={1}
+        total={TOTAL_PASSES}
+        onDone={() => advanceFrom(1)}
+      />
+    );
+  }
+
+  if (pass === 2) {
+    return (
+      <Completar
+        words={eligible(2)}
+        position={2}
+        total={TOTAL_PASSES}
+        onDone={() => advanceFrom(2)}
+      />
+    );
+  }
+
+  if (pass === 3) {
+    return (
+      <Producir
+        words={eligible(3)}
+        position={3}
+        total={TOTAL_PASSES}
+        onDone={() => advanceFrom(3)}
+      />
+    );
+  }
+
+  if (pass === 4) {
+    return (
+      <PassShell
+        label="en papel"
+        title="Cuatro tareas por palabra"
+        note="Lejos de la pantalla, a mano. La escritura es la mitad del método."
+        position={4}
+        total={TOTAL_PASSES}
+      >
+        <ol className="flex flex-col gap-3">
+          {TASKS.map((task, i) => (
+            <li key={task} className="flex gap-4 font-body text-[1.125rem]">
+              <span className="label mt-1.5 shrink-0 tabular-nums">{i + 1}</span>
+              <span>{task}</span>
+            </li>
+          ))}
+        </ol>
+
+        <p className="mt-6 font-body text-[0.9375rem] italic text-ink-faint">
+          La subida de la foto todavía no está hecha, así que por ahora el día
+          se cierra a mano.
+        </p>
+
+        <div className="mt-10">
+          <Primary
+            disabled={closing}
+            onClick={() => {
+              setClosing(true);
+              void completeDay().then((r) => {
+                if (r.ok) setDone(true);
+                else setClosing(false);
+              });
+            }}
+          >
+            {closing ? "Cerrando…" : "Terminar el día"}
+          </Primary>
+        </div>
+      </PassShell>
+    );
+  }
+
+  // Pass 0: read the entries and say, for each, whether it is already known.
+  const allSeen = seen.size === words.length;
 
   return (
     <div>
@@ -62,25 +175,23 @@ export function DailyWords({
           Palabras de hoy
         </h1>
         <p className="mt-3 font-body text-[1.0625rem] leading-relaxed text-ink-soft">
-          Marca cada palabra según la conozcas o no. Lo que marques como nueva
-          entra en el repaso.
+          Lee cada entrada y di si ya la conoces. Las que marques como nuevas se
+          practican a continuación.
         </p>
 
-        {/* Progress reads as a row of marks rather than a bar: ten things to
-            get through, and you can see which ones are left. */}
         <div className="mt-6 flex items-center gap-3">
           <div className="flex gap-1.5">
             {words.map((word) => (
               <span
                 key={word.id}
                 className={`h-1 w-6 rounded-full transition-colors duration-500 ${
-                  decided.has(word.id) ? "bg-rubric" : "bg-rule"
+                  seen.has(word.id) ? "bg-rubric" : "bg-rule"
                 }`}
               />
             ))}
           </div>
           <span className="label tabular-nums">
-            {decided.size}/{words.length}
+            {seen.size}/{words.length}
           </span>
         </div>
       </header>
@@ -91,52 +202,31 @@ export function DailyWords({
             key={word.id}
             word={word}
             index={i}
-            onDecided={(id) =>
-              setDecided((prev) => new Set(prev).add(id))
-            }
+            onDecided={(id, known) => {
+              setSeen((prev) => new Set(prev).add(id));
+              setDecided((prev) => {
+                const next = new Set(prev);
+                if (known) next.delete(id);
+                else next.add(id);
+                return next;
+              });
+            }}
           />
         ))}
       </div>
 
-      <section className="mt-14 border-t border-rule pt-8">
-        <p className="label">en papel</p>
-        <h2 className="mt-2 font-display text-2xl tracking-tight">
-          Cuatro tareas por palabra
-        </h2>
-        <ol className="mt-4 flex flex-col gap-2">
-          {TASKS.map((task, i) => (
-            <li key={task} className="flex gap-3 font-body text-[1.0625rem]">
-              <span className="label mt-1 shrink-0 tabular-nums">{i + 1}</span>
-              <span>{task}</span>
-            </li>
-          ))}
-        </ol>
-        <p className="mt-3 font-body text-[0.875rem] italic text-ink-faint">
-          La subida de la foto todavía no está hecha.
-        </p>
-
-        <button
-          type="button"
-          disabled={closing}
-          onClick={() => {
-            setClosing(true);
-            void completeDay().then((r) => {
-              if (r.ok) setDone(true);
-              else setClosing(false);
-            });
-          }}
-          className="mt-8 min-h-12 w-full rounded-sm bg-ink px-6 font-body text-[1.0625rem] text-paper transition-opacity hover:opacity-90 disabled:opacity-40 sm:w-auto"
-        >
-          {closing ? "Cerrando…" : "Terminar el día"}
-        </button>
-
-        {remaining > 0 && (
+      <div className="mt-14 border-t border-rule pt-8">
+        <Primary disabled={!allSeen} onClick={() => advanceFrom(0)}>
+          {unknown.length > 0
+            ? `Practicar ${unknown.length}`
+            : "Continuar"}
+        </Primary>
+        {!allSeen && (
           <p className="mt-3 font-body text-[0.875rem] italic text-ink-faint">
-            Te quedan {remaining}{" "}
-            {remaining === 1 ? "palabra" : "palabras"} por marcar.
+            Marca las {words.length - seen.size} que quedan para continuar.
           </p>
         )}
-      </section>
+      </div>
     </div>
   );
 }

@@ -311,3 +311,41 @@ export async function completeDay(): Promise<ActionResult> {
   revalidatePath("/");
   return { ok: true };
 }
+
+/**
+ * Grades a typed answer against every inflected form of the word, ignoring
+ * accents. Any form counts: the exercise tests whether the word is retrievable,
+ * not whether the exact inflection in the original sentence was reproduced.
+ */
+export async function checkWordAnswer(
+  wordId: number,
+  text: string,
+): Promise<boolean> {
+  const typed = tokenize(text);
+  if (typed.length === 0) return false;
+
+  const { data } = await db
+    .from("word_forms")
+    .select("form, form_folded")
+    .eq("word_id", wordId);
+
+  if (!data || data.length === 0) return false;
+
+  const exact = new Set(data.map((r) => r.form as string));
+  const folded = new Set(data.map((r) => r.form_folded as string));
+
+  return typed.some(
+    (token) => exact.has(token) || folded.has(foldAccents(token)),
+  );
+}
+
+/** Remembers which pass the session reached, so a refresh resumes it. */
+export async function setPassIndex(index: number): Promise<ActionResult> {
+  const { error } = await db
+    .from("sessions")
+    .update({ pass_index: index })
+    .eq("day", todayInMadrid());
+
+  if (error) return { ok: false, error: error.message };
+  return { ok: true };
+}
