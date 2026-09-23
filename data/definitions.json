@@ -1,42 +1,122 @@
 {
   "valer": {
-    "definition": "Tener un precio determinado; también tener utilidad o mérito. En España, «vale» se usa constantemente para decir «de acuerdo».",
-    "example": "¿Cuánto vale este abrigo?"
+    "es": "Tener un precio determinado; también tener utilidad o mérito. En España, «vale» se usa constantemente para decir «de acuerdo».",
+    "en": "to be worth; to cost; to be valid",
+    "example": "¿Cuánto vale este abrigo?",
+    "etymology": "Del latín valere, «ser fuerte, tener salud»; de ahí también valiente y valor."
   },
   "población": {
-    "definition": "Conjunto de personas que habitan un lugar determinado. También el lugar habitado en sí.",
-    "example": "La población de Madrid supera los tres millones de habitantes."
+    "es": "Conjunto de personas que habitan un lugar determinado. También el lugar habitado en sí.",
+    "en": "population; town, settlement",
+    "example": "La población de Madrid supera los tres millones de habitantes.",
+    "etymology": "Del latín populatio, de populus, «pueblo»."
   },
   "asegurar": {
-    "definition": "Afirmar algo con certeza. También fijar algo con firmeza, o contratar un seguro sobre algo.",
-    "example": "Me aseguró que llegaría antes de las ocho."
+    "es": "Afirmar algo con certeza. También fijar algo con firmeza, o contratar un seguro sobre algo.",
+    "en": "to assure, to assert; to secure; to insure",
+    "example": "Me aseguró que llegaría antes de las ocho.",
+    "etymology": "De seguro, del latín securus, «sin preocupación»: se- «sin» + cura «cuidado»."
   },
   "dólar": {
-    "definition": "Moneda oficial de Estados Unidos y de varios países más.",
-    "example": "El billete de avión costó trescientos dólares."
+    "es": "Moneda oficial de Estados Unidos y de varios países más.",
+    "en": "dollar",
+    "example": "El billete de avión costó trescientos dólares.",
+    "etymology": "Del inglés dollar, y este del bajo alemán taler, moneda de Bohemia."
   },
   "aquel": {
-    "definition": "Determinante demostrativo que señala algo lejano, tanto de quien habla como de quien escucha.",
-    "example": "Aquel edificio del fondo es el más antiguo del barrio."
+    "es": "Determinante demostrativo que señala algo lejano, tanto de quien habla como de quien escucha.",
+    "en": "that (over there); that one",
+    "example": "Aquel edificio del fondo es el más antiguo del barrio.",
+    "etymology": "Del latín eccum ille, «he allí aquel»."
   },
   "lograr": {
-    "definition": "Conseguir aquello que se pretendía, normalmente con esfuerzo.",
-    "example": "Logró aprobar el examen después de meses estudiando."
+    "es": "Conseguir aquello que se pretendía, normalmente con esfuerzo.",
+    "en": "to achieve, to manage to, to attain",
+    "example": "Logró aprobar el examen después de meses estudiando.",
+    "etymology": "Del latín lucrari, «ganar, sacar provecho»; de ahí también lucro."
   },
   "regresar": {
-    "definition": "Volver al lugar del que se había salido.",
-    "example": "Regresamos a casa cuando ya era de noche."
+    "es": "Volver al lugar del que se había salido.",
+    "en": "to return, to go back",
+    "example": "Regresamos a casa cuando ya era de noche.",
+    "etymology": "Del latín regressus, de regredi «volver atrás»: re- «atrás» + gradi «andar»."
   },
   "peseta": {
-    "definition": "Antigua moneda de España, sustituida por el euro en 2002. Todavía se oye en expresiones y al hablar del pasado.",
-    "example": "Antes un café costaba cien pesetas."
+    "es": "Antigua moneda de España, sustituida por el euro en 2002. Todavía se oye al hablar del pasado.",
+    "en": "peseta (former Spanish currency)",
+    "example": "Antes un café costaba cien pesetas.",
+    "etymology": "Diminutivo del catalán peça, «pieza»: literalmente «piecita»."
   },
   "siquiera": {
-    "definition": "Al menos, aunque sea poco. En frases negativas, «ni siquiera» significa «ni tan solo».",
-    "example": "Se marchó sin decirme siquiera su nombre."
+    "es": "Al menos, aunque sea poco. En frases negativas, «ni siquiera» significa «ni tan solo».",
+    "en": "even; at least (in negatives: not even)",
+    "example": "Se marchó sin decirme siquiera su nombre.",
+    "etymology": "De si + quiera, del verbo querer: «si se quiere»."
   },
   "través": {
-    "definition": "Aparece casi siempre en la locución «a través de», que significa por medio de algo, o cruzando algo de un lado a otro.",
-    "example": "Nos enteramos de la noticia a través de un amigo común."
+    "es": "Aparece casi siempre en la locución «a través de», que significa por medio de algo, o cruzando algo de un lado a otro.",
+    "en": "used in a través de: through, by means of",
+    "example": "Nos enteramos de la noticia a través de un amigo común.",
+    "etymology": "Del latín transversus, «atravesado»: trans «al otro lado» + vertere «girar»."
+  },
+  "señalar": {
+    "es": "Indicar o mostrar algo, normalmente con el dedo o con una marca. También hacer notar algo al hablar.",
+    "en": "to point out, to indicate; to mark; to signal",
+    "example": "El profesor señaló el error en la pizarra.",
+    "etymology": "De señal, del latín signalis, «relativo a la señal», de signum."
+  },
+  "dirigir": {
+    "es": "Llevar algo hacia un sitio o un fin determinado. También estar al mando de un grupo, una empresa o una película.",
+    "en": "to direct, to lead, to manage; to address (words to someone)",
+    "example": "Dirige la empresa desde hace diez años.",
+    "etymology": "Del latín dirigere, «enderezar, alinear»: dis- + regere «guiar»."
+  },
+  "destacar": {
+    "es": "Sobresalir entre los demás por alguna cualidad. También subrayar la importancia de algo.",
+    "en": "to stand out; to highlight, to emphasise",
+    "example": "Destaca por su facilidad con los idiomas.",
+    "etymology": "Del italiano staccare, «separar, desprender»."
+  },
+  "alcanzar": {
+    "es": "Llegar a tocar o conseguir algo que estaba lejos o costaba esfuerzo. También ser suficiente.",
+    "en": "to reach, to attain; to catch up with; to be enough",
+    "example": "Alcanzó la cima justo antes del amanecer.",
+    "etymology": "Del latín vulgar incalciare, «pisar los talones», de calx, «talón»."
+  },
+  "cuyo": {
+    "es": "Determinante relativo que indica posesión. Concuerda con lo poseído, no con el poseedor: «el escritor cuyas novelas leí».",
+    "en": "whose; of which",
+    "example": "Es un escritor cuyas novelas se leen en todo el mundo.",
+    "etymology": "Del latín cuius, genitivo de qui, «quien»."
+  },
+  "líder": {
+    "es": "Persona que dirige o encabeza un grupo, un partido o una clasificación.",
+    "en": "leader",
+    "example": "La líder del partido habló ante miles de personas.",
+    "etymology": "Del inglés leader, adaptado al español en el siglo XX."
+  },
+  "situar": {
+    "es": "Poner algo o a alguien en un lugar determinado. También ubicar algo en el espacio o en el tiempo.",
+    "en": "to place, to locate, to position, to set",
+    "example": "Sitúa la novela en el Madrid de los años treinta.",
+    "etymology": "Del latín medieval situare, de situs, «posición, sitio»."
+  },
+  "victoria": {
+    "es": "Resultado favorable en una lucha, una competición o una disputa.",
+    "en": "victory, win",
+    "example": "La victoria se decidió en el último minuto.",
+    "etymology": "Del latín victoria, de vincere, «vencer»; de ahí también convencer e invicto."
+  },
+  "romper": {
+    "es": "Partir algo en trozos o estropearlo. También interrumpir bruscamente algo, como un silencio o una relación.",
+    "en": "to break; to tear; to break off",
+    "example": "Se le rompió el vaso mientras fregaba.",
+    "etymology": "Del latín rumpere, «quebrar, reventar»; de ahí ruptura, irrumpir y corromper."
+  },
+  "ambos": {
+    "es": "Los dos, el uno y el otro, referido a dos elementos ya mencionados.",
+    "en": "both",
+    "example": "Ambos hermanos estudiaron en la misma escuela.",
+    "etymology": "Del latín ambos, acusativo de ambo, «los dos»."
   }
 }

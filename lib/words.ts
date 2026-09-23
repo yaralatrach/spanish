@@ -24,7 +24,9 @@ export type CurriculumWord = {
   family: FamilyMember[];
   participle_of: string | null;
   definition_es: string | null;
+  definition_en: string | null;
   example_es: string | null;
+  etymology_es: string | null;
 };
 
 export const POS_LABEL: Record<string, string> = {

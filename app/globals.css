@@ -1,11 +1,66 @@
 @import "tailwindcss";
 
+/* A study surface, not an app chrome: warm paper, deep ink, and a single
+   rubric red borrowed from the red initials of early Spanish printing. */
 :root {
-  /* System stack: no webfont fetch, so builds work offline and in CI. */
-  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, sans-serif;
+  --paper:      #faf7f2;
+  --paper-sunk: #f3eee5;
+  --ink:        #1c1917;
+  --ink-soft:   #6b635a;
+  --ink-faint:  #9c948a;
+  --rule:       #e4ddd1;
+  --rubric:     #a63d2f;
+  --rubric-wash:#f6ebe7;
+  --verde:      #4a6b4f;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-sunk: var(--paper-sunk);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ink-faint: var(--ink-faint);
+  --color-rule: var(--rule);
+  --color-rubric: var(--rubric);
+  --color-rubric-wash: var(--rubric-wash);
+  --color-verde: var(--verde);
+  --font-display: var(--font-fraunces);
+  --font-body: var(--font-newsreader);
 }
 
 body {
-  font-family: var(--font-sans);
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-newsreader), Georgia, serif;
+  /* A faint grain so the paper reads as a surface rather than a flat fill. */
+  background-image: radial-gradient(
+    circle at 1px 1px,
+    rgba(28, 25, 23, 0.035) 1px,
+    transparent 0
+  );
+  background-size: 22px 22px;
+}
+
+/* Small-caps labels, set the way a dictionary sets its field markers. */
+.label {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* Entries arrive in sequence on load rather than all at once. */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.rise {
+  animation: rise 0.5s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise { animation: none; }
 }

@@ -16,7 +16,7 @@ export default async function Home() {
   const [{ data: session }, { data: profile }] = await Promise.all([
     db
       .from("sessions")
-      .select("journal_submitted_at")
+      .select("journal_submitted_at, completed_at")
       .eq("day", day)
       .maybeSingle(),
     db
@@ -44,5 +44,11 @@ export default async function Home() {
   // here cannot stamp words on a day she has not actually started.
   const words = await serveWords();
 
-  return <DailyWords words={words} level={profile.level} />;
+  return (
+    <DailyWords
+      words={words}
+      level={profile.level}
+      alreadyDone={Boolean(session.completed_at)}
+    />
+  );
 }

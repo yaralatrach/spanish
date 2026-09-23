@@ -23,59 +23,71 @@ export function PlacementTest() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="flex flex-col gap-8">
-      <div>
-        <h1 className="text-2xl font-semibold">Prueba de nivel</h1>
-        <p className="mt-1 text-sm text-neutral-600">
-          Doce preguntas, una sola vez. Si no lo sabes, elige lo que te suene
-          mejor.
+    <form onSubmit={onSubmit}>
+      <header className="rise">
+        <p className="label">una sola vez</p>
+        <h1 className="mt-2 font-display text-[2.5rem] leading-[1.05] tracking-tight sm:text-[3.25rem]">
+          Prueba de nivel
+        </h1>
+        <p className="mt-3 font-body text-[1.0625rem] leading-relaxed text-ink-soft">
+          Doce preguntas. Si no lo sabes, elige lo que te suene mejor.
         </p>
+      </header>
+
+      <div className="mt-12 flex flex-col gap-10">
+        {PLACEMENT_QUESTIONS.map((question, index) => (
+          <fieldset
+            key={question.id}
+            className="rise"
+            style={{ animationDelay: `${Math.min(index, 8) * 50}ms` }}
+          >
+            <legend className="font-body text-[1.125rem] leading-relaxed">
+              <span className="label mr-3 tabular-nums">{index + 1}</span>
+              {question.prompt}
+            </legend>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {question.options.map((option) => {
+                const selected = answers[question.id] === option;
+                return (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() =>
+                      setAnswers((prev) => ({ ...prev, [question.id]: option }))
+                    }
+                    className={`min-h-11 rounded-sm border px-4 font-body text-[1rem] transition-colors ${
+                      selected
+                        ? "border-ink bg-ink text-paper"
+                        : "border-rule text-ink-soft hover:border-ink-faint"
+                    }`}
+                  >
+                    {option}
+                  </button>
+                );
+              })}
+            </div>
+          </fieldset>
+        ))}
       </div>
 
-      {PLACEMENT_QUESTIONS.map((question, index) => (
-        <fieldset key={question.id} className="flex flex-col gap-2">
-          <legend className="mb-1 text-base">
-            <span className="mr-2 text-neutral-400">{index + 1}.</span>
-            {question.prompt}
-          </legend>
-          <div className="flex flex-wrap gap-2">
-            {question.options.map((option) => {
-              const selected = answers[question.id] === option;
-              return (
-                <button
-                  key={option}
-                  type="button"
-                  onClick={() =>
-                    setAnswers((prev) => ({ ...prev, [question.id]: option }))
-                  }
-                  className={`min-h-11 rounded-lg border px-4 py-2 text-sm ${
-                    selected
-                      ? "border-neutral-900 bg-neutral-900 text-white"
-                      : "border-neutral-300 hover:border-neutral-500"
-                  }`}
-                >
-                  {option}
-                </button>
-              );
-            })}
-          </div>
-        </fieldset>
-      ))}
-
-      <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
-        <span className="text-neutral-500">
+      <div className="mt-12 flex flex-wrap items-center justify-between gap-4 border-t border-rule pt-6">
+        <span className="label tabular-nums">
           {answered} de {PLACEMENT_QUESTIONS.length}
         </span>
         <button
           type="submit"
           disabled={pending || !complete}
-          className="min-h-11 w-full rounded-lg bg-neutral-900 px-5 py-2.5 font-medium text-white disabled:opacity-40 sm:w-auto"
+          className="min-h-12 w-full rounded-sm bg-ink px-6 font-body text-[1.0625rem] text-paper transition-opacity hover:opacity-90 disabled:opacity-30 sm:w-auto"
         >
           {pending ? "Calculando…" : "Terminar"}
         </button>
       </div>
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && (
+        <p className="mt-3 font-body text-[0.9375rem] italic text-rubric">
+          {error}
+        </p>
+      )}
     </form>
   );
 }

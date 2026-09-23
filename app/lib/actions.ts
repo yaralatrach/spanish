@@ -296,3 +296,18 @@ export async function finishSweep(): Promise<ActionResult> {
   revalidatePath("/");
   return { ok: true };
 }
+
+/**
+ * Closes the day. Until this exists a session has no end: the words are
+ * introduced and the screen simply stops, which is no way to build a habit.
+ */
+export async function completeDay(): Promise<ActionResult> {
+  const { error } = await db
+    .from("sessions")
+    .update({ completed_at: new Date().toISOString() })
+    .eq("day", todayInMadrid());
+
+  if (error) return { ok: false, error: error.message };
+  revalidatePath("/");
+  return { ok: true };
+}
