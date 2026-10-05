@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 
-import { JournalReview } from "@/app/components/JournalReview";
 import { Lectura } from "@/app/components/Lectura";
 import { Completar, Producir, Reconocer } from "@/app/components/Passes";
 import { PassShell, Primary } from "@/app/components/PassShell";
@@ -24,16 +23,13 @@ export function DailyWords({
   alreadyDone,
   initialPass,
   initiallyNew,
-  reviewPending,
 }: {
   words: PracticeWord[];
   level: string | null;
   alreadyDone: boolean;
   initialPass: number;
   initiallyNew: number[];
-  reviewPending: boolean;
 }) {
-  const [reviewing, setReviewing] = useState(reviewPending);
   const [pass, setPass] = useState(initialPass);
   const [decided, setDecided] = useState<Set<number>>(
     () => new Set(initiallyNew),
@@ -65,11 +61,6 @@ export function DailyWords({
     if (index === 2) return unknown.filter((w) => w.cloze);
     if (index === 3) return unknown;
     return [];
-  }
-
-  // The correction on what she just wrote comes before the day's words.
-  if (reviewing) {
-    return <JournalReview onDone={() => setReviewing(false)} />;
   }
 
   if (words.length === 0) {

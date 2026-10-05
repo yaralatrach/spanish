@@ -26,6 +26,21 @@ const ReviewSchema = z.object({
       }),
     )
     .describe("Una entrada por error. Vacío si no hay ninguno."),
+  gaps: z
+    .array(
+      z.object({
+        english: z.string().describe("La palabra que escribió en inglés."),
+        spanish: z
+          .string()
+          .describe("El equivalente en español, en infinitivo o singular."),
+        note: z
+          .string()
+          .describe("Cómo se usa, en español, en una frase corta."),
+      }),
+    )
+    .describe(
+      "Una entrada por palabra que escribió en inglés dentro del texto español. Vacío si no hay ninguna.",
+    ),
   praise: z
     .string()
     .describe("Una cosa concreta que hizo bien, en español, en una frase."),
@@ -36,7 +51,8 @@ const SYSTEM = `Corriges el diario en español de una estudiante de nivel B1 cuy
 Reglas:
 - Corrige todo: acentos, ortografía, concordancia, tiempos verbales, preposiciones y palabras en otro idioma.
 - El acento que falta es un error, no un descuido: márcalo siempre.
-- Una palabra en inglés dentro del texto se corrige por la española que corresponda.
+- Una palabra en inglés dentro del texto se corrige por la española que corresponda, y además va en «gaps»: es la palabra que le faltaba, y eso es lo más útil que tiene este diario.
+- En «gaps» pon también lo que escribió en español rodeando una idea porque no sabía la palabra exacta, si se nota.
 - Conserva su voz y lo que quiso decir. No reescribas su estilo ni alargues las frases.
 - Usa español peninsular: vosotros, coger, ordenador, zumo.
 - Las notas van en español, claras y breves, dirigidas a ella.
@@ -88,10 +104,47 @@ export async function reviewJournal(): Promise<JournalReview | null> {
       .update({ journal_review: review })
       .eq("day", day);
 
+    await recordGaps(review.gaps, day);
     return review;
   } catch {
     // A grammar check must never block the day. Failing quietly is correct.
     return null;
+  }
+}
+
+/**
+ * Stores the words she reached for in English, and moves the Spanish ones she
+ * will actually be taught to the front of the queue. A word she tried to use
+ * today is worth more than the next one down the frequency list.
+ */
+async function recordGaps(gaps: JournalReview["gaps"], day: string) {
+  if (!gaps || gaps.length === 0) return;
+
+  for (const gap of gaps) {
+    const lemma = gap.spanish.trim().toLowerCase();
+
+    const { data: word } = await db
+      .from("words")
+      .select("id")
+      .eq("lemma", lemma)
+      .maybeSingle();
+
+    await db.from("vocab_gaps").upsert(
+      {
+        english: gap.english.trim().toLowerCase(),
+        spanish: lemma,
+        note: gap.note,
+        day,
+        word_id: word?.id ?? null,
+      },
+      { onConflict: "english,spanish" },
+    );
+
+    // Only a curriculum word can be promoted; the rest are recorded and shown,
+    // which is the honest limit of this without inventing ranks.
+    if (word?.id) {
+      await db.from("words").update({ wanted: true }).eq("id", word.id);
+    }
   }
 }
 

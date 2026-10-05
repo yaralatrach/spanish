@@ -1,5 +1,6 @@
 import { DailyWords } from "@/app/components/DailyWords";
 import { JournalGate } from "@/app/components/JournalGate";
+import { JournalReview } from "@/app/components/JournalReview";
 import { PlacementTest } from "@/app/components/PlacementTest";
 import { Repaso } from "@/app/components/Repaso";
 import { SweepMode } from "@/app/components/SweepMode";
@@ -33,6 +34,11 @@ export default async function Home() {
   // The journal gate comes first, every day, before anything else opens.
   if (!session?.journal_submitted_at) return <JournalGate />;
 
+  // Then what she just wrote, corrected. A step of the day in its own right,
+  // not a prop of the words screen: the rest of the day is sequenced behind
+  // it, so it has to mark itself done even when there is no key to call.
+  if (!session.review_seen_at) return <JournalReview />;
+
   if (!profile?.placement_completed_at) return <PlacementTest />;
 
   // The sweep runs once, between placement and the first daily session, so the
@@ -47,7 +53,7 @@ export default async function Home() {
 
   // Review comes before the day's new words: what is already half-known is
   // worth more than what is not known at all.
-  if (!session.repaso_done_at && session.review_seen_at) {
+  if (!session.repaso_done_at) {
     const due = await dueWords();
     if (due.length > 0) return <Repaso words={due} />;
   }
@@ -95,7 +101,6 @@ export default async function Home() {
       initiallyNew={(progress ?? [])
         .filter((p) => p.status === "learning")
         .map((p) => p.word_id as number)}
-      reviewPending={!session.review_seen_at}
     />
   );
 }

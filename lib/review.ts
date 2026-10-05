@@ -13,9 +13,17 @@ export type Correction = {
   kind: CorrectionKind;
 };
 
+/** A word she wrote in English because she did not have the Spanish. */
+export type Gap = {
+  english: string;
+  spanish: string;
+  note: string;
+};
+
 export type JournalReview = {
   corrected: string;
   corrections: Correction[];
+  gaps: Gap[];
   praise: string;
 };
 

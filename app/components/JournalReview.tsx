@@ -1,46 +1,48 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 import { Primary } from "@/app/components/PassShell";
 import { dismissReview, reviewJournal } from "@/app/lib/review";
 import type { JournalReview as Review } from "@/lib/review";
 
-export function JournalReview({ onDone }: { onDone: () => void }) {
+export function JournalReview() {
+  const router = useRouter();
   const [review, setReview] = useState<Review | null>(null);
-  const [state, setState] = useState<"loading" | "ready" | "unavailable">(
-    "loading",
-  );
-  const [, startTransition] = useTransition();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     let live = true;
+
     reviewJournal()
-      .then((result) => {
+      .then(async (result) => {
         if (!live) return;
-        if (!result) {
-          // No key, or the call failed. The correction is an addition to the
-          // day, never a condition of it, so move straight on.
-          setState("unavailable");
-          onDone();
+        if (result) {
+          setReview(result);
+          setLoading(false);
           return;
         }
-        setReview(result);
-        setState("ready");
+        // No key, or the call failed. Mark the step done anyway: an earlier
+        // version left it unmarked, and because the rest of the day was gated
+        // behind it, review never ran at all.
+        await dismissReview();
+        router.refresh();
       })
-      .catch(() => {
+      .catch(async () => {
         if (!live) return;
-        setState("unavailable");
-        onDone();
+        await dismissReview();
+        router.refresh();
       });
+
     return () => {
       live = false;
     };
-    // Runs once per mount: the entry is already written and will not change.
+    // Runs once: the entry is already written and will not change.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (state === "loading") {
+  if (loading || !review) {
     return (
       <div className="rise">
         <p className="label">corrigiendo</p>
@@ -60,9 +62,8 @@ export function JournalReview({ onDone }: { onDone: () => void }) {
     );
   }
 
-  if (state === "unavailable" || !review) return null;
-
   const clean = review.corrections.length === 0;
+  const gaps = review.gaps ?? [];
 
   return (
     <div className="rise">
@@ -74,6 +75,31 @@ export function JournalReview({ onDone }: { onDone: () => void }) {
       <p className="mt-4 border-l-2 border-verde pl-4 font-body text-[1.0625rem] leading-relaxed text-ink-soft">
         {review.praise}
       </p>
+
+      {gaps.length > 0 && (
+        <section className="mt-10 rounded-sm bg-rubric-wash px-5 py-5">
+          <p className="label">lo que te faltaba</p>
+          <p className="mt-1 font-body text-[0.9375rem] italic leading-relaxed text-ink-soft">
+            Palabras que has escrito en inglés. Las que están en la lista pasan
+            al principio de la cola.
+          </p>
+          <dl className="mt-4 flex flex-col gap-4">
+            {gaps.map((gap) => (
+              <div key={`${gap.english}-${gap.spanish}`}>
+                <dt className="font-display text-[1.25rem]">
+                  {gap.spanish}
+                  <span className="ml-3 font-body text-[0.9375rem] italic text-ink-faint">
+                    {gap.english}
+                  </span>
+                </dt>
+                <dd className="mt-0.5 font-body text-[0.9375rem] leading-relaxed text-ink-soft">
+                  {gap.note}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      )}
 
       {!clean && (
         <div className="mt-10 flex flex-col gap-6">
@@ -111,10 +137,7 @@ export function JournalReview({ onDone }: { onDone: () => void }) {
       <div className="mt-10">
         <Primary
           onClick={() => {
-            startTransition(async () => {
-              await dismissReview();
-              onDone();
-            });
+            void dismissReview().then(() => router.refresh());
           }}
         >
           Continuar
