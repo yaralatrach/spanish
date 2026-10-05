@@ -1,0 +1,73 @@
+[
+  { "theme": "rutina",     "prompt": "¿Cómo ha empezado tu día? Cuenta lo que has hecho desde que te has levantado." },
+  { "theme": "rutina",     "prompt": "¿Qué parte del día te gusta más y por qué?" },
+  { "theme": "rutina",     "prompt": "Describe algo que haces todos los días sin pensar." },
+
+  { "theme": "comida",     "prompt": "¿Qué has comido hoy? Describe un plato con detalle: qué lleva y cómo se hace." },
+  { "theme": "comida",     "prompt": "Cuenta la última vez que cocinaste algo para alguien." },
+  { "theme": "comida",     "prompt": "¿Qué comprarías en el mercado para toda la semana?" },
+
+  { "theme": "casa",       "prompt": "Describe la habitación donde estás ahora mismo. ¿Qué ves?" },
+  { "theme": "casa",       "prompt": "¿Qué cambiarías de tu casa si pudieras?" },
+  { "theme": "casa",       "prompt": "Cuenta algo que se te ha roto o que has tenido que arreglar." },
+
+  { "theme": "trabajo",    "prompt": "¿En qué has trabajado hoy? Explícalo como si yo no supiera nada de tu trabajo." },
+  { "theme": "trabajo",    "prompt": "Cuenta una reunión o una conversación de trabajo de esta semana." },
+  { "theme": "trabajo",    "prompt": "¿Qué es lo más difícil de lo que haces?" },
+
+  { "theme": "gente",      "prompt": "Describe a alguien con quien has hablado hoy: cómo es, cómo habla." },
+  { "theme": "gente",      "prompt": "Cuenta cómo conociste a una persona importante para ti." },
+  { "theme": "gente",      "prompt": "¿A quién echas de menos y por qué?" },
+
+  { "theme": "ciudad",     "prompt": "Describe el camino que haces desde tu casa hasta un sitio al que vas a menudo." },
+  { "theme": "ciudad",     "prompt": "¿Qué le enseñarías a alguien que viene a tu ciudad por primera vez?" },
+  { "theme": "ciudad",     "prompt": "Cuenta algo que has visto hoy en la calle." },
+
+  { "theme": "viaje",      "prompt": "Cuenta un viaje que hiciste: adónde fuiste y qué pasó." },
+  { "theme": "viaje",      "prompt": "¿Adónde irías si tuvieras dos semanas libres? ¿Qué harías allí?" },
+  { "theme": "viaje",      "prompt": "Describe el peor trayecto que recuerdas." },
+
+  { "theme": "salud",      "prompt": "¿Cómo te sientes hoy, físicamente? Sé concreta." },
+  { "theme": "salud",      "prompt": "Cuenta la última vez que fuiste al médico o te encontraste mal." },
+  { "theme": "salud",      "prompt": "¿Qué haces para cuidarte? ¿Y qué deberías hacer y no haces?" },
+
+  { "theme": "dinero",     "prompt": "¿En qué has gastado dinero esta semana? ¿Mereció la pena?" },
+  { "theme": "dinero",     "prompt": "Cuenta algo que compraste y que no deberías haber comprado." },
+  { "theme": "dinero",     "prompt": "¿Cómo explicarías lo que cuesta vivir donde vives?" },
+
+  { "theme": "tiempo libre", "prompt": "¿Qué has hecho para desconectar últimamente?" },
+  { "theme": "tiempo libre", "prompt": "Describe algo que estás aprendiendo o practicando ahora." },
+  { "theme": "tiempo libre", "prompt": "Cuenta un fin de semana entero, de principio a fin." },
+
+  { "theme": "estudios",   "prompt": "¿Cómo estudias? Describe tu método, aunque sea un desastre." },
+  { "theme": "estudios",   "prompt": "Cuenta algo que te costó mucho aprender." },
+  { "theme": "estudios",   "prompt": "¿Por qué quieres hablar español bien? Sé sincera." },
+
+  { "theme": "tecnología", "prompt": "Cuenta un problema con un ordenador o un móvil que hayas tenido." },
+  { "theme": "tecnología", "prompt": "¿Qué aplicación usas más y para qué?" },
+  { "theme": "tecnología", "prompt": "Explica cómo se hace algo con el ordenador, paso a paso." },
+
+  { "theme": "sentimientos", "prompt": "¿Qué te ha molestado hoy? ¿Por qué?" },
+  { "theme": "sentimientos", "prompt": "Cuenta algo que te ha hecho ilusión esta semana." },
+  { "theme": "sentimientos", "prompt": "¿De qué estás harta ahora mismo?" },
+
+  { "theme": "pasado",     "prompt": "Cuenta un recuerdo de cuando eras pequeña." },
+  { "theme": "pasado",     "prompt": "¿Cómo era un día normal para ti hace cinco años?" },
+  { "theme": "pasado",     "prompt": "Describe una casa o un sitio de tu infancia." },
+
+  { "theme": "planes",     "prompt": "¿Qué vas a hacer mañana? Cuéntalo con detalle." },
+  { "theme": "planes",     "prompt": "¿Qué quieres haber conseguido dentro de un año?" },
+  { "theme": "planes",     "prompt": "Cuenta algo que llevas tiempo queriendo hacer y no haces." },
+
+  { "theme": "opiniones",  "prompt": "¿Estás de acuerdo con esto: trabajar desde casa es mejor? Argumenta." },
+  { "theme": "opiniones",  "prompt": "Cuenta una noticia que hayas leído y qué te parece." },
+  { "theme": "opiniones",  "prompt": "¿Qué le cambiarías a tu ciudad si mandaras tú?" },
+
+  { "theme": "ropa",       "prompt": "Describe lo que llevas puesto hoy y por qué lo has elegido." },
+  { "theme": "ropa",       "prompt": "Cuenta la última vez que fuiste de compras." },
+  { "theme": "ropa",       "prompt": "¿Qué prenda no tirarías nunca?" },
+
+  { "theme": "tiempo",     "prompt": "¿Qué tiempo ha hecho hoy? ¿Cómo te ha afectado?" },
+  { "theme": "tiempo",     "prompt": "¿Qué estación prefieres y qué haces en ella?" },
+  { "theme": "tiempo",     "prompt": "Cuenta un día de lluvia o de calor que recuerdes." }
+]

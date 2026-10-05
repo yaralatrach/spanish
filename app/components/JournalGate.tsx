@@ -4,12 +4,21 @@ import { useState, useTransition } from "react";
 
 import { submitJournal } from "@/app/lib/actions";
 import { MIN_JOURNAL_CHARS } from "@/lib/journal";
+import { promptForDay } from "@/lib/prompts";
 
-export function JournalGate() {
+export function JournalGate({
+  day,
+  initialOffset,
+}: {
+  day: string;
+  initialOffset: number;
+}) {
+  const [offset, setOffset] = useState(initialOffset);
   const [text, setText] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
 
+  const today = promptForDay(day, offset);
   const length = text.trim().length;
   const remaining = Math.max(0, MIN_JOURNAL_CHARS - length);
 
@@ -17,7 +26,7 @@ export function JournalGate() {
     event.preventDefault();
     setError(null);
     startTransition(async () => {
-      const result = await submitJournal(text);
+      const result = await submitJournal(text, today.theme, offset);
       if (!result.ok) setError(result.error);
     });
   }
@@ -28,9 +37,27 @@ export function JournalGate() {
       <h1 className="mt-2 font-display text-[2.5rem] leading-[1.05] tracking-tight sm:text-[3.25rem]">
         Tu diario de hoy
       </h1>
-      <p className="mt-3 font-body text-[1.0625rem] leading-relaxed text-ink-soft">
-        Escribe antes que nada. Cada palabra de la lista que uses aquí cuenta
-        como aprendida: haberla usado tú vale más que haberla reconocido.
+
+      {/* A blank page is the hardest version of this. The prompt is the whole
+          scaffolding, and its theme is what the day's new words follow. */}
+      <div className="mt-8 border-l-2 border-rubric pl-5">
+        <p className="label">{today.theme}</p>
+        <p className="mt-2 font-display text-[1.5rem] leading-snug sm:text-[1.75rem]">
+          {today.prompt}
+        </p>
+        <button
+          type="button"
+          onClick={() => setOffset((n) => n + 1)}
+          className="mt-3 py-1 font-body text-[0.9375rem] italic text-ink-soft underline decoration-rule underline-offset-4 transition-colors hover:text-rubric"
+        >
+          otra pregunta
+        </button>
+      </div>
+
+      <p className="mt-6 font-body text-[1.0625rem] leading-relaxed text-ink-soft">
+        No hace falta seguirla al pie de la letra. Cada palabra de la lista que
+        uses aquí cuenta como aprendida: haberla usado tú vale más que haberla
+        reconocido.
       </p>
 
       <textarea
@@ -38,8 +65,8 @@ export function JournalGate() {
         onChange={(event) => setText(event.target.value)}
         rows={12}
         autoFocus
-        placeholder="¿Qué has hecho hoy?"
-        className="mt-8 w-full resize-y border-0 border-l-2 border-rule bg-transparent pl-5 font-body text-[1.0625rem] leading-relaxed outline-none transition-colors placeholder:text-ink-faint placeholder:italic focus:border-rubric"
+        placeholder="Escribe aquí…"
+        className="mt-6 w-full resize-y border-0 border-l-2 border-rule bg-transparent pl-5 font-body text-[1.0625rem] leading-relaxed outline-none transition-colors placeholder:text-ink-faint placeholder:italic focus:border-rubric"
       />
 
       <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-rule pt-5">

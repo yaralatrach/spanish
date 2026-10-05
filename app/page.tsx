@@ -21,7 +21,7 @@ export default async function Home() {
     db
       .from("sessions")
       .select(
-        "journal_submitted_at, completed_at, pass_index, review_seen_at, repaso_done_at",
+        "journal_submitted_at, completed_at, pass_index, review_seen_at, repaso_done_at, prompt_offset",
       )
       .eq("day", day)
       .maybeSingle(),
@@ -32,7 +32,9 @@ export default async function Home() {
   ]);
 
   // The journal gate comes first, every day, before anything else opens.
-  if (!session?.journal_submitted_at) return <JournalGate />;
+  if (!session?.journal_submitted_at) {
+    return <JournalGate day={day} initialOffset={session?.prompt_offset ?? 0} />;
+  }
 
   // Then what she just wrote, corrected. A step of the day in its own right,
   // not a prop of the words screen: the rest of the day is sequenced behind

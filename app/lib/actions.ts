@@ -21,7 +21,11 @@ import {
  * The daily gate. Nothing else in the app opens until this is written, so it
  * is deliberately the only way to create the day's session row.
  */
-export async function submitJournal(text: string): Promise<ActionResult> {
+export async function submitJournal(
+  text: string,
+  theme: string,
+  promptOffset: number,
+): Promise<ActionResult> {
   const entry = text.trim();
   if (entry.length < MIN_JOURNAL_CHARS) {
     return {
@@ -31,11 +35,15 @@ export async function submitJournal(text: string): Promise<ActionResult> {
   }
 
   const day = todayInMadrid();
+  // The prompt's theme is stored on the session: it is what the day's new
+  // words follow, so what she wrote about decides what she is taught next.
   const { error } = await db.from("sessions").upsert(
     {
       day,
       journal_text: entry,
       journal_submitted_at: new Date().toISOString(),
+      theme,
+      prompt_offset: promptOffset,
     },
     { onConflict: "day" },
   );
