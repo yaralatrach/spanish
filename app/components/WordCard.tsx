@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 
 import { markWord, markDerived } from "@/app/lib/actions";
+import { band } from "@/lib/confidence";
 import {
   POS_LABEL,
   PERSONS,
@@ -55,6 +56,10 @@ export function WordCard({
         </h2>
         <span className="label mt-2 shrink-0 tabular-nums">{word.rank}</span>
       </header>
+
+      {typeof word.confidence === "number" && word.confidence > 0 && (
+        <Confidence value={word.confidence} />
+      )}
 
       <p className="mt-1 font-body text-[0.9375rem] italic text-ink-soft">
         {POS_LABEL[word.pos] ?? word.pos.toLowerCase()}
@@ -165,6 +170,26 @@ export function WordCard({
         </Choice>
       </div>
     </article>
+  );
+}
+
+/** How well she knows it, from her own attempts. */
+function Confidence({ value }: { value: number }) {
+  const { label } = band(value);
+  return (
+    <div className="mt-2 flex items-center gap-2.5">
+      <span className="flex gap-0.5" aria-hidden>
+        {[0, 1, 2, 3].map((i) => (
+          <span
+            key={i}
+            className={`h-1 w-5 rounded-full ${
+              value >= (i + 1) * 25 ? "bg-verde" : "bg-rule"
+            }`}
+          />
+        ))}
+      </span>
+      <span className="label">{label}</span>
+    </div>
   );
 }
 

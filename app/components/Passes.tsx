@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import { PassShell, Primary, Verdict } from "@/app/components/PassShell";
-import { checkWordAnswer } from "@/app/lib/actions";
+import { checkWordAnswer, recordAttempt } from "@/app/lib/actions";
 import { optionsFor, type PracticeWord } from "@/lib/practice";
 
 /** Definition shown, the word chosen from today's own batch. */
@@ -33,6 +33,15 @@ export function Reconocer({
     else onDone();
   }
 
+  function choose(option: string) {
+    setPicked(option);
+    void recordAttempt(
+      word.id,
+      "reconocer",
+      option === word.lemma ? "clean" : "wrong",
+    );
+  }
+
   return (
     <PassShell
       label="reconocer"
@@ -57,7 +66,7 @@ export function Reconocer({
               key={option}
               type="button"
               disabled={picked !== null}
-              onClick={() => setPicked(option)}
+              onClick={() => choose(option)}
               className={`min-h-12 rounded-sm border px-5 font-display text-[1.125rem] transition-colors ${
                 reveal
                   ? "border-verde bg-verde text-paper"
@@ -93,11 +102,13 @@ export function Reconocer({
 /** The example sentence with the word removed, typed back from memory. */
 export function Completar({
   words,
+  batch,
   onDone,
   position,
   total,
 }: {
   words: PracticeWord[];
+  batch: PracticeWord[];
   onDone: () => void;
   position: number;
   total: number;
@@ -107,20 +118,46 @@ export function Completar({
   const [state, setState] = useState<"right" | "wrong" | null>(null);
   const [hint, setHint] = useState(false);
   const [revealed, setRevealed] = useState(false);
+  // Hints escalate from meaning to form: the English gloss keeps her
+  // retrieving along the route she will actually use, and only when that
+  // fails does she get the shape of the word.
+  const [hints, setHints] = useState(0);
   const [checking, setChecking] = useState(false);
 
   const word = words[i];
   const cloze = word.cloze;
+  const answer = cloze?.answer.toLowerCase() ?? word.lemma;
+  const options = useStableOptions(word, batch);
+
+  // Meaning of the whole sentence, then a shortlist, then the shape of the
+  // word. Not understanding the sentence is the thing that blocks her, so it
+  // is what the first hint removes.
+  const HINTS = 3;
 
   async function check() {
     if (!value.trim() || checking) return;
     setChecking(true);
     const ok = await checkWordAnswer(word.id, value);
     setState(ok ? "right" : "wrong");
-    // Failure reveals the word rather than moving on: the scaffold appears
-    // only for the words that actually needed it.
-    if (!ok) setHint(true);
+    if (ok) {
+      void recordAttempt(
+        word.id,
+        "completar",
+        hints === 0 ? "clean" : "hinted",
+        hints,
+      );
+    } else {
+      // Failure reveals the word rather than moving on: the scaffold appears
+      // only for the words that actually needed it.
+      setHint(true);
+      void recordAttempt(word.id, "completar", "wrong", hints);
+    }
     setChecking(false);
+  }
+
+  function giveUp() {
+    setRevealed(true);
+    void recordAttempt(word.id, "completar", "revealed", hints);
   }
 
   function next() {
@@ -128,6 +165,7 @@ export function Completar({
     setState(null);
     setHint(false);
     setRevealed(false);
+    setHints(0);
     if (i + 1 < words.length) setI(i + 1);
     else onDone();
   }
@@ -174,6 +212,34 @@ export function Completar({
         className="mt-8 w-full border-0 border-b border-rule bg-transparent pb-2 font-display text-[1.5rem] outline-none transition-colors placeholder:font-body placeholder:text-[1.125rem] placeholder:italic placeholder:text-ink-faint focus:border-rubric"
       />
 
+      {hints > 0 && !revealed && (
+        <div className="mt-6 flex flex-col gap-4 border-l-2 border-rule pl-4">
+          {word.example_en && (
+            <p className="font-body text-[1.0625rem] leading-relaxed text-ink-soft">
+              {word.example_en}
+            </p>
+          )}
+          {hints >= 2 && (
+            <div>
+              <p className="label">una de estas</p>
+              <div className="mt-2 flex flex-wrap gap-2">
+                {options.map((option) => (
+                  <button
+                    key={option}
+                    type="button"
+                    onClick={() => setValue(option)}
+                    className="min-h-10 rounded-sm border border-rule px-3.5 font-display text-[1.0625rem] text-ink transition-colors hover:border-ink-faint"
+                  >
+                    {option}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+          {hints >= 3 && <Skeleton answer={answer} />}
+        </div>
+      )}
+
       {!revealed && <Verdict state={state} />}
 
       {revealed && <Reveal word={word} />}
@@ -188,11 +254,20 @@ export function Completar({
             <Primary onClick={check} disabled={!value.trim() || checking}>
               {checking ? "Comprobando…" : "Comprobar"}
             </Primary>
+            {hints < HINTS && (
+              <button
+                type="button"
+                onClick={() => setHints((n) => n + 1)}
+                className="py-2 font-body text-[0.9375rem] italic text-ink-soft underline decoration-rule underline-offset-4 transition-colors hover:text-rubric"
+              >
+                {hints === 0 ? "Pista" : "Otra pista"}
+              </button>
+            )}
             {/* Guessing wrong on purpose to escape teaches nothing. Saying so
                 outright costs the attempt but buys the explanation. */}
             <button
               type="button"
-              onClick={() => setRevealed(true)}
+              onClick={giveUp}
               className="py-2 font-body text-[0.9375rem] italic text-ink-soft underline decoration-rule underline-offset-4 transition-colors hover:text-rubric"
             >
               No lo sé
@@ -201,6 +276,23 @@ export function Completar({
         )}
       </div>
     </PassShell>
+  );
+}
+
+/** First letter and length: the shape of the word, without the word. */
+function Skeleton({ answer }: { answer: string }) {
+  const letters = [...answer];
+  return (
+    <p className="font-display text-[1.25rem] tracking-[0.3em] text-ink">
+      {letters[0]}
+      {letters
+        .slice(1)
+        .map((c) => (/[\p{L}\p{M}]/u.test(c) ? "·" : c))
+        .join("")}
+      <span className="ml-3 font-body text-[0.875rem] tracking-normal text-ink-faint">
+        {letters.length} letras
+      </span>
+    </p>
   );
 }
 
@@ -266,7 +358,9 @@ export function Producir({
   async function check() {
     if (!value.trim() || checking) return;
     setChecking(true);
-    setState((await checkWordAnswer(word.id, value)) ? "right" : "wrong");
+    const ok = await checkWordAnswer(word.id, value);
+    setState(ok ? "right" : "wrong");
+    void recordAttempt(word.id, "producir", ok ? "clean" : "wrong");
     setChecking(false);
   }
 
@@ -332,7 +426,10 @@ export function Producir({
             </Primary>
             <button
               type="button"
-              onClick={() => setRevealed(true)}
+              onClick={() => {
+                setRevealed(true);
+                void recordAttempt(word.id, "producir", "revealed");
+              }}
               className="py-2 font-body text-[0.9375rem] italic text-ink-soft underline decoration-rule underline-offset-4 transition-colors hover:text-rubric"
             >
               No lo sé

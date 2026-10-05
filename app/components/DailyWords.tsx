@@ -107,6 +107,7 @@ export function DailyWords({
     return (
       <Completar
         words={eligible(2)}
+        batch={words}
         position={2}
         total={TOTAL_PASSES}
         onDone={() => advanceFrom(2)}

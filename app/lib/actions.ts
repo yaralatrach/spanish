@@ -4,7 +4,8 @@ import { revalidatePath } from "next/cache";
 
 import { db } from "@/lib/supabase";
 import { MIN_JOURNAL_CHARS, type ActionResult } from "@/lib/journal";
-import { dueAfter } from "@/lib/srs";
+import { dueAfter, LAST_STEP } from "@/lib/srs";
+import { nextConfidence, type Outcome } from "@/lib/confidence";
 import { NEW_WORDS_PER_DAY, SWEEP_BATCH } from "@/lib/curriculum";
 import type { CurriculumWord } from "@/lib/words";
 import { todayInMadrid } from "@/lib/today";
@@ -355,7 +356,9 @@ export async function setPassIndex(index: number): Promise<ActionResult> {
  * is resolved through the same form table the journal evidence rule uses, so
  * clicking an inflected form finds its lemma.
  */
-export async function markTokenUnknown(token: string): Promise<string | null> {
+export async function markTokenUnknown(
+  token: string,
+): Promise<{ wordId: number; lemma: string } | null> {
   const lower = token.toLowerCase();
 
   const { data } = await db
@@ -391,5 +394,54 @@ export async function markTokenUnknown(token: string): Promise<string | null> {
 
   revalidatePath("/");
   const words = row.words as unknown as { lemma: string } | null;
-  return words?.lemma ?? null;
+  return words ? { wordId: row.word_id as number, lemma: words.lemma } : null;
+}
+
+/**
+ * Records one attempt and moves the word's confidence. This is what "no lo sé"
+ * now writes: giving up is a different signal from producing cleanly, and
+ * until both are stored the review engine has nothing to schedule against.
+ */
+export async function recordAttempt(
+  wordId: number,
+  pass: "reconocer" | "completar" | "producir" | "lectura",
+  outcome: Outcome,
+  hints = 0,
+): Promise<void> {
+  const now = new Date().toISOString();
+
+  await db.from("attempts").insert({
+    word_id: wordId,
+    day: todayInMadrid(),
+    pass,
+    outcome,
+    hints,
+  });
+
+  const { data: progress } = await db
+    .from("word_progress")
+    .select("confidence, srs_step, lapses, known_source")
+    .eq("word_id", wordId)
+    .maybeSingle();
+
+  const confidence = nextConfidence(progress?.confidence ?? 0, outcome);
+  const failed = outcome === "revealed" || outcome === "wrong";
+
+  // A clean answer advances a rung; anything else drops back to the start.
+  // Failing a word is what the ladder exists to catch.
+  const step = failed ? 0 : Math.min((progress?.srs_step ?? 0) + 1, LAST_STEP);
+
+  await db.from("word_progress").upsert(
+    {
+      word_id: wordId,
+      status: confidence >= 80 ? "known" : "learning",
+      confidence,
+      srs_step: step,
+      due_at: dueAfter(step).toISOString(),
+      lapses: (progress?.lapses ?? 0) + (failed ? 1 : 0),
+      known_source: progress?.known_source ?? null,
+      updated_at: now,
+    },
+    { onConflict: "word_id" },
+  );
 }

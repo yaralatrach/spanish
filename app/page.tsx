@@ -54,9 +54,8 @@ export default async function Home() {
     db.from("word_forms").select("word_id, form").in("word_id", ids),
     db
       .from("word_progress")
-      .select("word_id, status")
-      .in("word_id", ids)
-      .eq("status", "learning"),
+      .select("word_id, status, confidence")
+      .in("word_id", ids),
   ]);
 
   const formsByWord = new Map<number, string[]>();
@@ -65,8 +64,13 @@ export default async function Home() {
     formsByWord.set(key, [...(formsByWord.get(key) ?? []), row.form as string]);
   }
 
+  const confidenceByWord = new Map(
+    (progress ?? []).map((p) => [p.word_id as number, (p.confidence as number) ?? 0]),
+  );
+
   const practice: PracticeWord[] = words.map((word) => ({
     ...word,
+    confidence: confidenceByWord.get(word.id) ?? 0,
     cloze: word.example_es
       ? buildCloze(word.example_es, formsByWord.get(word.id) ?? [word.lemma])
       : null,
@@ -78,7 +82,9 @@ export default async function Home() {
       level={profile.level}
       alreadyDone={Boolean(session.completed_at)}
       initialPass={session.pass_index ?? 0}
-      initiallyNew={(progress ?? []).map((p) => p.word_id as number)}
+      initiallyNew={(progress ?? [])
+        .filter((p) => p.status === "learning")
+        .map((p) => p.word_id as number)}
       reviewPending={!session.review_seen_at}
     />
   );

@@ -28,6 +28,7 @@ export type CurriculumWord = {
   example_es: string | null;
   example_en: string | null;
   etymology_es: string | null;
+  confidence?: number | null;
 };
 
 export const POS_LABEL: Record<string, string> = {

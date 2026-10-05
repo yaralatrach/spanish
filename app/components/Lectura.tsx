@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { PassShell, Primary } from "@/app/components/PassShell";
-import { markTokenUnknown } from "@/app/lib/actions";
+import { markTokenUnknown, recordAttempt } from "@/app/lib/actions";
 import { dailyPassage } from "@/app/lib/review";
 
 /**
@@ -81,7 +81,9 @@ export function Lectura({
     const key = token.toLowerCase();
     if (marked.has(key) || misses.has(key)) return;
     setMarked((prev) => new Set(prev).add(key));
-    void markTokenUnknown(token).then((lemma) => {
+    void markTokenUnknown(token).then((result) => {
+      const lemma = result?.lemma ?? null;
+      if (result) void recordAttempt(result.wordId, "lectura", "revealed");
       if (!lemma) {
         // Not a curriculum word, so there is nothing to schedule. Say so
         // rather than leaving a mark that did nothing.
