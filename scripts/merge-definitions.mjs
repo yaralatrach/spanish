@@ -28,6 +28,7 @@ for (const [lemma, entry] of Object.entries(defs)) {
   word.definitionEn = entry.en;
   word.example = entry.example;
   word.etymology = entry.etymology;
+  word.exampleEn = entry.exampleEn ?? null;
   applied += 1;
 }
 

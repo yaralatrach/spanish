@@ -3,300 +3,350 @@
     "es": "Tener un precio determinado; también tener utilidad o mérito. En España, «vale» se usa constantemente para decir «de acuerdo».",
     "en": "to be worth; to cost; to be valid",
     "example": "¿Cuánto vale este abrigo?",
-    "etymology": "Del latín valere, «ser fuerte, tener salud»; de ahí también valiente y valor."
+    "etymology": "Del latín valere, «ser fuerte, tener salud»; de ahí también valiente y valor.",
+    "exampleEn": "How much is this coat?"
   },
   "población": {
     "es": "Conjunto de personas que habitan un lugar determinado. También el lugar habitado en sí.",
     "en": "population; town, settlement",
     "example": "La población de Madrid supera los tres millones de habitantes.",
-    "etymology": "Del latín populatio, de populus, «pueblo»."
+    "etymology": "Del latín populatio, de populus, «pueblo».",
+    "exampleEn": "The population of Madrid is over three million."
   },
   "asegurar": {
     "es": "Afirmar algo con certeza. También fijar algo con firmeza, o contratar un seguro sobre algo.",
     "en": "to assure, to assert; to secure; to insure",
     "example": "Me aseguró que llegaría antes de las ocho.",
-    "etymology": "De seguro, del latín securus, «sin preocupación»: se- «sin» + cura «cuidado»."
+    "etymology": "De seguro, del latín securus, «sin preocupación»: se- «sin» + cura «cuidado».",
+    "exampleEn": "He assured me he would arrive before eight."
   },
   "dólar": {
     "es": "Moneda oficial de Estados Unidos y de varios países más.",
     "en": "dollar",
     "example": "El billete de avión costó trescientos dólares.",
-    "etymology": "Del inglés dollar, y este del bajo alemán taler, moneda de Bohemia."
+    "etymology": "Del inglés dollar, y este del bajo alemán taler, moneda de Bohemia.",
+    "exampleEn": "The plane ticket cost three hundred dollars."
   },
   "aquel": {
     "es": "Determinante demostrativo que señala algo lejano, tanto de quien habla como de quien escucha.",
     "en": "that (over there); that one",
     "example": "Aquel edificio del fondo es el más antiguo del barrio.",
-    "etymology": "Del latín eccum ille, «he allí aquel»."
+    "etymology": "Del latín eccum ille, «he allí aquel».",
+    "exampleEn": "That building at the back is the oldest in the neighbourhood."
   },
   "lograr": {
     "es": "Conseguir aquello que se pretendía, normalmente con esfuerzo.",
     "en": "to achieve, to manage to, to attain",
     "example": "Logró aprobar el examen después de meses estudiando.",
-    "etymology": "Del latín lucrari, «ganar, sacar provecho»; de ahí también lucro."
+    "etymology": "Del latín lucrari, «ganar, sacar provecho»; de ahí también lucro.",
+    "exampleEn": "She managed to pass the exam after months of studying."
   },
   "regresar": {
     "es": "Volver al lugar del que se había salido.",
     "en": "to return, to go back",
     "example": "Regresamos a casa cuando ya era de noche.",
-    "etymology": "Del latín regressus, de regredi «volver atrás»: re- «atrás» + gradi «andar»."
+    "etymology": "Del latín regressus, de regredi «volver atrás»: re- «atrás» + gradi «andar».",
+    "exampleEn": "We got back home when it was already dark."
   },
   "peseta": {
     "es": "Antigua moneda de España, sustituida por el euro en 2002. Todavía se oye al hablar del pasado.",
     "en": "peseta (former Spanish currency)",
     "example": "Antes un café costaba cien pesetas.",
-    "etymology": "Diminutivo del catalán peça, «pieza»: literalmente «piecita»."
+    "etymology": "Diminutivo del catalán peça, «pieza»: literalmente «piecita».",
+    "exampleEn": "A coffee used to cost a hundred pesetas."
   },
   "siquiera": {
     "es": "Al menos, aunque sea poco. En frases negativas, «ni siquiera» significa «ni tan solo».",
     "en": "even; at least (in negatives: not even)",
     "example": "Se marchó sin decirme siquiera su nombre.",
-    "etymology": "De si + quiera, del verbo querer: «si se quiere»."
+    "etymology": "De si + quiera, del verbo querer: «si se quiere».",
+    "exampleEn": "He left without even telling me his name."
   },
   "través": {
     "es": "Aparece casi siempre en la locución «a través de», que significa por medio de algo, o cruzando algo de un lado a otro.",
     "en": "used in a través de: through, by means of",
     "example": "Nos enteramos de la noticia a través de un amigo común.",
-    "etymology": "Del latín transversus, «atravesado»: trans «al otro lado» + vertere «girar»."
+    "etymology": "Del latín transversus, «atravesado»: trans «al otro lado» + vertere «girar».",
+    "exampleEn": "We heard the news through a mutual friend."
   },
   "señalar": {
     "es": "Indicar o mostrar algo, normalmente con el dedo o con una marca. También hacer notar algo al hablar.",
     "en": "to point out, to indicate; to mark; to signal",
     "example": "El profesor señaló el error en la pizarra.",
-    "etymology": "De señal, del latín signalis, «relativo a la señal», de signum."
+    "etymology": "De señal, del latín signalis, «relativo a la señal», de signum.",
+    "exampleEn": "The teacher pointed out the mistake on the board."
   },
   "dirigir": {
     "es": "Llevar algo hacia un sitio o un fin determinado. También estar al mando de un grupo, una empresa o una película.",
     "en": "to direct, to lead, to manage; to address (words to someone)",
     "example": "Dirige la empresa desde hace diez años.",
-    "etymology": "Del latín dirigere, «enderezar, alinear»: dis- + regere «guiar»."
+    "etymology": "Del latín dirigere, «enderezar, alinear»: dis- + regere «guiar».",
+    "exampleEn": "She has run the company for ten years."
   },
   "destacar": {
     "es": "Sobresalir entre los demás por alguna cualidad. También subrayar la importancia de algo.",
     "en": "to stand out; to highlight, to emphasise",
     "example": "Destaca por su facilidad con los idiomas.",
-    "etymology": "Del italiano staccare, «separar, desprender»."
+    "etymology": "Del italiano staccare, «separar, desprender».",
+    "exampleEn": "She stands out for how easily she picks up languages."
   },
   "alcanzar": {
     "es": "Llegar a tocar o conseguir algo que estaba lejos o costaba esfuerzo. También ser suficiente.",
     "en": "to reach, to attain; to catch up with; to be enough",
     "example": "Alcanzó la cima justo antes del amanecer.",
-    "etymology": "Del latín vulgar incalciare, «pisar los talones», de calx, «talón»."
+    "etymology": "Del latín vulgar incalciare, «pisar los talones», de calx, «talón».",
+    "exampleEn": "He reached the summit just before dawn."
   },
   "cuyo": {
     "es": "Determinante relativo que indica posesión. Concuerda con lo poseído, no con el poseedor: «el escritor cuyas novelas leí».",
     "en": "whose; of which",
     "example": "Es un escritor cuyas novelas se leen en todo el mundo.",
-    "etymology": "Del latín cuius, genitivo de qui, «quien»."
+    "etymology": "Del latín cuius, genitivo de qui, «quien».",
+    "exampleEn": "He is a writer whose novels are read all over the world."
   },
   "líder": {
     "es": "Persona que dirige o encabeza un grupo, un partido o una clasificación.",
     "en": "leader",
     "example": "La líder del partido habló ante miles de personas.",
-    "etymology": "Del inglés leader, adaptado al español en el siglo XX."
+    "etymology": "Del inglés leader, adaptado al español en el siglo XX.",
+    "exampleEn": "The party leader spoke in front of thousands of people."
   },
   "situar": {
     "es": "Poner algo o a alguien en un lugar determinado. También ubicar algo en el espacio o en el tiempo.",
     "en": "to place, to locate, to position, to set",
     "example": "Sitúa la novela en el Madrid de los años treinta.",
-    "etymology": "Del latín medieval situare, de situs, «posición, sitio»."
+    "etymology": "Del latín medieval situare, de situs, «posición, sitio».",
+    "exampleEn": "She sets the novel in the Madrid of the nineteen-thirties."
   },
   "victoria": {
     "es": "Resultado favorable en una lucha, una competición o una disputa.",
     "en": "victory, win",
     "example": "La victoria se decidió en el último minuto.",
-    "etymology": "Del latín victoria, de vincere, «vencer»; de ahí también convencer e invicto."
+    "etymology": "Del latín victoria, de vincere, «vencer»; de ahí también convencer e invicto.",
+    "exampleEn": "The win was decided in the last minute."
   },
   "romper": {
     "es": "Partir algo en trozos o estropearlo. También interrumpir bruscamente algo, como un silencio o una relación.",
     "en": "to break; to tear; to break off",
     "example": "Se le rompió el vaso mientras fregaba.",
-    "etymology": "Del latín rumpere, «quebrar, reventar»; de ahí ruptura, irrumpir y corromper."
+    "etymology": "Del latín rumpere, «quebrar, reventar»; de ahí ruptura, irrumpir y corromper.",
+    "exampleEn": "She broke the glass while she was washing up."
   },
   "ambos": {
     "es": "Los dos, el uno y el otro, referido a dos elementos ya mencionados.",
     "en": "both",
     "example": "Ambos hermanos estudiaron en la misma escuela.",
-    "etymology": "Del latín ambos, acusativo de ambo, «los dos»."
+    "etymology": "Del latín ambos, acusativo de ambo, «los dos».",
+    "exampleEn": "Both brothers went to the same school."
   },
   "actuar": {
     "es": "Obrar, hacer algo con un fin determinado. También interpretar un papel en teatro, cine o música.",
     "en": "to act; to perform",
     "example": "Actuó con rapidez al ver el humo.",
-    "etymology": "Del latín actuare, de actus «acción»; de ahí acto, actor y actitud."
+    "etymology": "Del latín actuare, de actus «acción»; de ahí acto, actor y actitud.",
+    "exampleEn": "She acted quickly when she saw the smoke."
   },
   "encuentro": {
     "es": "Hecho de coincidir dos o más personas, por casualidad o porque lo habían acordado. También un partido o una reunión.",
     "en": "meeting, encounter; match",
     "example": "Tuvimos un encuentro inesperado en la estación.",
-    "etymology": "De encontrar, del latín in contra, «frente a»."
+    "etymology": "De encontrar, del latín in contra, «frente a».",
+    "exampleEn": "We had an unexpected encounter at the station."
   },
   "apoyo": {
     "es": "Ayuda o respaldo que se da a alguien. También aquello sobre lo que descansa un objeto.",
     "en": "support, backing",
     "example": "Contó con el apoyo de toda su familia.",
-    "etymology": "De apoyar, del latín vulgar appodiare, de podium «base, pedestal»."
+    "etymology": "De apoyar, del latín vulgar appodiare, de podium «base, pedestal».",
+    "exampleEn": "He had the support of his whole family."
   },
   "sangre": {
     "es": "Líquido rojo que circula por las venas y las arterias. También el parentesco de nacimiento.",
     "en": "blood",
     "example": "Le hicieron un análisis de sangre.",
-    "etymology": "Del latín sanguis; de ahí sangriento, desangrar y consanguíneo."
+    "etymology": "Del latín sanguis; de ahí sangriento, desangrar y consanguíneo.",
+    "exampleEn": "They gave him a blood test."
   },
   "lanzar": {
     "es": "Arrojar algo con fuerza. También poner algo en marcha por primera vez, como un producto o una campaña.",
     "en": "to throw; to launch",
     "example": "Lanzó la pelota por encima del muro.",
-    "etymology": "Del latín lanceare «manejar la lanza», de lancea."
+    "etymology": "Del latín lanceare «manejar la lanza», de lancea.",
+    "exampleEn": "He threw the ball over the wall."
   },
   "pertenecer": {
     "es": "Ser propiedad de alguien, o formar parte de un grupo o de un conjunto.",
     "en": "to belong to",
     "example": "Ese cuadro pertenece a mi abuela.",
-    "etymology": "Del latín tardío pertinere «extenderse hasta, concernir»; de ahí pertinente."
+    "etymology": "Del latín tardío pertinere «extenderse hasta, concernir»; de ahí pertinente.",
+    "exampleEn": "That painting belongs to my grandmother."
   },
   "posición": {
     "es": "Lugar que ocupa algo o alguien. También la postura que se adopta ante un asunto.",
     "en": "position; stance",
     "example": "Defendió su posición con argumentos sólidos.",
-    "etymology": "Del latín positio, de ponere «poner»."
+    "etymology": "Del latín positio, de ponere «poner».",
+    "exampleEn": "She defended her position with solid arguments."
   },
   "soler": {
     "es": "Tener costumbre de hacer algo. Solo se usa en presente e imperfecto, y siempre con un infinitivo detrás.",
     "en": "to usually do something",
     "example": "Suelo desayunar antes de las ocho.",
-    "etymology": "Del latín solere «acostumbrar»; de ahí insólito, «lo que no suele pasar»."
+    "etymology": "Del latín solere «acostumbrar»; de ahí insólito, «lo que no suele pasar».",
+    "exampleEn": "I usually have breakfast before eight."
   },
   "prensa": {
     "es": "Conjunto de los medios de comunicación escritos y de quienes trabajan en ellos. También la máquina que aprieta algo.",
     "en": "the press; a press (machine)",
     "example": "La noticia apareció en toda la prensa.",
-    "etymology": "Del catalán premsa, de prémer «apretar», del latín premere."
+    "etymology": "Del catalán premsa, de prémer «apretar», del latín premere.",
+    "exampleEn": "The story appeared across the whole press."
   },
   "conjunto": {
     "es": "Grupo de elementos que se consideran juntos. También un grupo musical o una ropa que combina.",
     "en": "set, group; outfit; band",
     "example": "El conjunto de las pruebas apunta a lo mismo.",
-    "etymology": "Del latín coniunctus, de coniungere «unir»: con- + iungere «juntar»."
+    "etymology": "Del latín coniunctus, de coniungere «unir»: con- + iungere «juntar».",
+    "exampleEn": "Taken together, the evidence all points the same way."
   },
   "duda": {
     "es": "Falta de seguridad sobre algo; vacilación entre dos posibilidades.",
     "en": "doubt",
     "example": "No me cabe la menor duda.",
-    "etymology": "De dudar, del latín dubitare, de dubius «que va de dos maneras»."
+    "etymology": "De dudar, del latín dubitare, de dubius «que va de dos maneras».",
+    "exampleEn": "I haven't the slightest doubt."
   },
   "desarrollo": {
     "es": "Proceso por el que algo crece, avanza o se perfecciona.",
     "en": "development, growth",
     "example": "El desarrollo del proyecto llevó dos años.",
-    "etymology": "De desarrollar: des- + rollo, literalmente «desenrollar» lo que estaba enrollado."
+    "etymology": "De desarrollar: des- + rollo, literalmente «desenrollar» lo que estaba enrollado.",
+    "exampleEn": "The development of the project took two years."
   },
   "voto": {
     "es": "Expresión de la preferencia de alguien en una elección. También promesa solemne, sobre todo religiosa.",
     "en": "vote; vow",
     "example": "Su voto decidió el resultado.",
-    "etymology": "Del latín votum «promesa a los dioses», de vovere «prometer»; de ahí devoto."
+    "etymology": "Del latín votum «promesa a los dioses», de vovere «prometer»; de ahí devoto.",
+    "exampleEn": "Her vote decided the result."
   },
   "capaz": {
     "es": "Que puede hacer algo o tiene aptitud para ello. También que tiene cabida para algo.",
     "en": "capable, able",
     "example": "Es capaz de aprender un idioma en un año.",
-    "etymology": "Del latín capax, de capere «coger, contener»; de ahí capacidad y caber."
+    "etymology": "Del latín capax, de capere «coger, contener»; de ahí capacidad y caber.",
+    "exampleEn": "She is capable of learning a language in a year."
   },
   "lleno": {
     "es": "Que contiene todo lo que cabe en él. De una persona, que ya ha comido bastante.",
     "en": "full",
     "example": "El teatro estaba lleno.",
-    "etymology": "Del latín plenus «completo»; de ahí pleno, plenitud y rellenar."
+    "etymology": "Del latín plenus «completo»; de ahí pleno, plenitud y rellenar.",
+    "exampleEn": "The theatre was full."
   },
   "daño": {
     "es": "Perjuicio o dolor causado a alguien o a algo.",
     "en": "damage, harm",
     "example": "La tormenta causó daños en el tejado.",
-    "etymology": "Del latín damnum «pérdida, perjuicio»; de ahí condenar e indemnizar."
+    "etymology": "Del latín damnum «pérdida, perjuicio»; de ahí condenar e indemnizar.",
+    "exampleEn": "The storm caused damage to the roof."
   },
   "superar": {
     "es": "Vencer una dificultad, o quedar por encima de algo o de alguien.",
     "en": "to overcome; to exceed, to surpass",
     "example": "Superó la entrevista sin ningún problema.",
-    "etymology": "Del latín superare, de super «por encima»."
+    "etymology": "Del latín superare, de super «por encima».",
+    "exampleEn": "She got through the interview without any trouble."
   },
   "aumentar": {
     "es": "Hacer que algo sea mayor en tamaño, cantidad o intensidad; o volverse mayor.",
     "en": "to increase, to raise, to rise",
     "example": "El precio del alquiler ha aumentado otra vez.",
-    "etymology": "Del latín augmentare, de augere «hacer crecer»; de ahí auge y aumento."
+    "etymology": "Del latín augmentare, de augere «hacer crecer»; de ahí auge y aumento.",
+    "exampleEn": "The rent has gone up again."
   },
   "electoral": {
     "es": "Relativo a las elecciones y a quienes votan en ellas.",
     "en": "electoral, election (as modifier)",
     "example": "La campaña electoral dura dos semanas.",
-    "etymology": "De elector, del latín eligere «escoger»: e- «fuera» + legere «elegir»."
+    "etymology": "De elector, del latín eligere «escoger»: e- «fuera» + legere «elegir».",
+    "exampleEn": "The election campaign lasts two weeks."
   },
   "andar": {
     "es": "Moverse dando pasos. También funcionar una máquina, o estar de cierta manera: «anda muy ocupado».",
     "en": "to walk; to go about; to work (of a machine)",
     "example": "Anduvimos media hora hasta llegar al pueblo.",
-    "etymology": "Del latín vulgar ambitare, de ambire «ir alrededor»."
+    "etymology": "Del latín vulgar ambitare, de ambire «ir alrededor».",
+    "exampleEn": "We walked for half an hour to get to the village."
   },
   "juicio": {
     "es": "Proceso ante un tribunal. También la capacidad de distinguir lo acertado de lo equivocado.",
     "en": "trial; judgement",
     "example": "El juicio empezará en marzo.",
-    "etymology": "Del latín iudicium, de iudex «juez»: ius «derecho» + dicere «decir»."
+    "etymology": "Del latín iudicium, de iudex «juez»: ius «derecho» + dicere «decir».",
+    "exampleEn": "The trial will start in March."
   },
   "bastar": {
     "es": "Ser suficiente. Muy frecuente en «basta con que…» y en la exclamación «¡basta!».",
     "en": "to be enough, to suffice",
     "example": "Basta con que me avises un día antes.",
-    "etymology": "Del latín vulgar bastare «ser suficiente», del griego bastázein «sostener»."
+    "etymology": "Del latín vulgar bastare «ser suficiente», del griego bastázein «sostener».",
+    "exampleEn": "It is enough if you let me know a day before."
   },
   "asesinato": {
     "es": "Acto de matar a alguien de forma intencionada y con agravantes.",
     "en": "murder, assassination",
     "example": "La novela empieza con un asesinato.",
-    "etymology": "De asesino, del árabe hashshāshīn, nombre de una secta medieval."
+    "etymology": "De asesino, del árabe hashshāshīn, nombre de una secta medieval.",
+    "exampleEn": "The novel opens with a murder."
   },
   "jornada": {
     "es": "Duración del trabajo diario. También un día entero dedicado a algo, o una etapa de un viaje.",
     "en": "working day; day's journey",
     "example": "Trabaja media jornada los viernes.",
-    "etymology": "Del occitano jornada, de jorn «día», del latín diurnus."
+    "etymology": "Del occitano jornada, de jorn «día», del latín diurnus.",
+    "exampleEn": "She works half days on Fridays."
   },
   "condado": {
     "es": "División territorial de algunos países, sobre todo de habla inglesa. También el territorio de un conde.",
     "en": "county",
     "example": "El condado de Kent está al sureste de Inglaterra.",
-    "etymology": "De conde, del latín comes, comitis, «compañero», título de la corte imperial."
+    "etymology": "De conde, del latín comes, comitis, «compañero», título de la corte imperial.",
+    "exampleEn": "The county of Kent is in the south-east of England."
   },
   "marca": {
     "es": "Señal que distingue algo. También el nombre comercial de un producto, y el mejor resultado en un deporte.",
     "en": "mark; brand; record",
     "example": "Batió la marca mundial en París.",
-    "etymology": "Del germánico mark «signo, límite»; de ahí marcar y comarca."
+    "etymology": "Del germánico mark «signo, límite»; de ahí marcar y comarca.",
+    "exampleEn": "He broke the world record in Paris."
   },
   "negar": {
     "es": "Decir que algo no es cierto. También no conceder lo que se pide.",
     "en": "to deny; to refuse",
     "example": "Negó haber estado allí esa noche.",
-    "etymology": "Del latín negare, de nec «no»; de ahí negativo y denegar."
+    "etymology": "Del latín negare, de nec «no»; de ahí negativo y denegar.",
+    "exampleEn": "He denied having been there that night."
   },
   "distrito": {
     "es": "Cada una de las partes en que se divide una ciudad o un territorio para administrarlo.",
     "en": "district",
     "example": "Vive en el distrito de Chamberí.",
-    "etymology": "Del latín medieval districtus «territorio bajo una jurisdicción», de distringere «sujetar»."
+    "etymology": "Del latín medieval districtus «territorio bajo una jurisdicción», de distringere «sujetar».",
+    "exampleEn": "She lives in the Chamberí district."
   },
   "ruso": {
     "es": "De Rusia o relacionado con ese país. También el idioma que allí se habla.",
     "en": "Russian",
     "example": "Estudia ruso desde hace dos años.",
-    "etymology": "De Rus, nombre medieval del pueblo eslavo oriental."
+    "etymology": "De Rus, nombre medieval del pueblo eslavo oriental.",
+    "exampleEn": "She has been studying Russian for two years."
   },
   "atacar": {
     "es": "Lanzarse contra alguien o algo para hacerle daño. También criticar con dureza, o empezar algo con energía.",
     "en": "to attack",
     "example": "El perro atacó sin avisar.",
-    "etymology": "Del italiano attaccare «unir, trabar»: trabar combate."
+    "etymology": "Del italiano attaccare «unir, trabar»: trabar combate.",
+    "exampleEn": "The dog attacked without warning."
   }
 }

@@ -106,6 +106,7 @@ export function Completar({
   const [value, setValue] = useState("");
   const [state, setState] = useState<"right" | "wrong" | null>(null);
   const [hint, setHint] = useState(false);
+  const [revealed, setRevealed] = useState(false);
   const [checking, setChecking] = useState(false);
 
   const word = words[i];
@@ -126,6 +127,7 @@ export function Completar({
     setValue("");
     setState(null);
     setHint(false);
+    setRevealed(false);
     if (i + 1 < words.length) setI(i + 1);
     else onDone();
   }
@@ -142,7 +144,7 @@ export function Completar({
         {i + 1} de {words.length}
       </p>
 
-      {hint && (
+      {hint && !revealed && (
         <p className="mt-3 font-display text-[1.5rem] text-rubric">
           {word.lemma}
         </p>
@@ -172,20 +174,72 @@ export function Completar({
         className="mt-8 w-full border-0 border-b border-rule bg-transparent pb-2 font-display text-[1.5rem] outline-none transition-colors placeholder:font-body placeholder:text-[1.125rem] placeholder:italic placeholder:text-ink-faint focus:border-rubric"
       />
 
-      <Verdict state={state} />
+      {!revealed && <Verdict state={state} />}
 
-      <div className="mt-8">
-        {state === "right" ? (
+      {revealed && <Reveal word={word} />}
+
+      <div className="mt-8 flex flex-wrap items-center gap-5">
+        {state === "right" || revealed ? (
           <Primary onClick={next}>
             {i + 1 < words.length ? "Siguiente" : "Continuar"}
           </Primary>
         ) : (
-          <Primary onClick={check} disabled={!value.trim() || checking}>
-            {checking ? "Comprobando…" : "Comprobar"}
-          </Primary>
+          <>
+            <Primary onClick={check} disabled={!value.trim() || checking}>
+              {checking ? "Comprobando…" : "Comprobar"}
+            </Primary>
+            {/* Guessing wrong on purpose to escape teaches nothing. Saying so
+                outright costs the attempt but buys the explanation. */}
+            <button
+              type="button"
+              onClick={() => setRevealed(true)}
+              className="py-2 font-body text-[0.9375rem] italic text-ink-soft underline decoration-rule underline-offset-4 transition-colors hover:text-rubric"
+            >
+              No lo sé
+            </button>
+          </>
         )}
       </div>
     </PassShell>
+  );
+}
+
+/** Everything known about the word, shown when she says she does not know it. */
+function Reveal({ word }: { word: PracticeWord }) {
+  return (
+    <div className="rise mt-8 border-t border-rule pt-6">
+      <p className="font-display text-[2rem] leading-tight">{word.lemma}</p>
+      {word.definition_en && (
+        <p className="mt-1 font-body text-[1.0625rem] italic text-ink-soft">
+          {word.definition_en}
+        </p>
+      )}
+
+      {word.definition_es && (
+        <p className="mt-4 font-body text-[1.0625rem] leading-relaxed">
+          {word.definition_es}
+        </p>
+      )}
+
+      {word.example_es && (
+        <div className="mt-5 border-l-2 border-rubric pl-4">
+          <p className="font-body text-[1.0625rem] italic leading-relaxed">
+            {word.example_es}
+          </p>
+          {word.example_en && (
+            <p className="mt-1.5 font-body text-[0.9375rem] leading-relaxed text-ink-soft">
+              {word.example_en}
+            </p>
+          )}
+        </div>
+      )}
+
+      {word.etymology_es && (
+        <p className="mt-5 font-body text-[0.875rem] leading-relaxed text-ink-faint">
+          {word.etymology_es}
+        </p>
+      )}
+    </div>
   );
 }
 
@@ -204,6 +258,7 @@ export function Producir({
   const [i, setI] = useState(0);
   const [value, setValue] = useState("");
   const [state, setState] = useState<"right" | "wrong" | null>(null);
+  const [revealed, setRevealed] = useState(false);
   const [checking, setChecking] = useState(false);
 
   const word = words[i];
@@ -218,6 +273,7 @@ export function Producir({
   function next() {
     setValue("");
     setState(null);
+    setRevealed(false);
     if (i + 1 < words.length) setI(i + 1);
     else onDone();
   }
@@ -262,15 +318,26 @@ export function Producir({
         </p>
       )}
 
-      <div className="mt-8">
-        {state === "right" ? (
+      {revealed && <Reveal word={word} />}
+
+      <div className="mt-8 flex flex-wrap items-center gap-5">
+        {state === "right" || revealed ? (
           <Primary onClick={next}>
             {i + 1 < words.length ? "Siguiente" : "Continuar"}
           </Primary>
         ) : (
-          <Primary onClick={check} disabled={!value.trim() || checking}>
-            {checking ? "Comprobando…" : "Comprobar"}
-          </Primary>
+          <>
+            <Primary onClick={check} disabled={!value.trim() || checking}>
+              {checking ? "Comprobando…" : "Comprobar"}
+            </Primary>
+            <button
+              type="button"
+              onClick={() => setRevealed(true)}
+              className="py-2 font-body text-[0.9375rem] italic text-ink-soft underline decoration-rule underline-offset-4 transition-colors hover:text-rubric"
+            >
+              No lo sé
+            </button>
+          </>
         )}
       </div>
     </PassShell>
