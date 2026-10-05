@@ -116,7 +116,6 @@ export function Completar({
   const [i, setI] = useState(0);
   const [value, setValue] = useState("");
   const [state, setState] = useState<"right" | "wrong" | null>(null);
-  const [hint, setHint] = useState(false);
   const [revealed, setRevealed] = useState(false);
   // Hints escalate from meaning to form: the English gloss keeps her
   // retrieving along the route she will actually use, and only when that
@@ -147,10 +146,13 @@ export function Completar({
         hints,
       );
     } else {
-      // Failure reveals the word rather than moving on: the scaffold appears
-      // only for the words that actually needed it.
-      setHint(true);
+      // A wrong answer escalates the scaffolding rather than handing over the
+      // answer. Only once the hints run out does the word itself appear, and
+      // by then she has had the sentence in English, a shortlist and the shape
+      // of the word. Giving it away on the first miss ends the retrieval.
       void recordAttempt(word.id, "completar", "wrong", hints);
+      if (hints < HINTS) setHints((n) => n + 1);
+      else setRevealed(true);
     }
     setChecking(false);
   }
@@ -163,7 +165,6 @@ export function Completar({
   function next() {
     setValue("");
     setState(null);
-    setHint(false);
     setRevealed(false);
     setHints(0);
     if (i + 1 < words.length) setI(i + 1);
@@ -181,12 +182,6 @@ export function Completar({
       <p className="label tabular-nums">
         {i + 1} de {words.length}
       </p>
-
-      {hint && !revealed && (
-        <p className="mt-3 font-display text-[1.5rem] text-rubric">
-          {word.lemma}
-        </p>
-      )}
 
       <p className="mt-4 border-l-2 border-rubric pl-4 font-body text-[1.25rem] italic leading-relaxed">
         {cloze?.before}
@@ -214,9 +209,12 @@ export function Completar({
 
       {hints > 0 && !revealed && (
         <div className="mt-6 flex flex-col gap-4 border-l-2 border-rule pl-4">
-          {word.example_en && (
+          {/* The gapped translation, not the full one: "The population of
+              Madrid…" hands over "población" in a single word. Where no gapped
+              version is written, the hint is skipped rather than leaked. */}
+          {word.example_en_gap && (
             <p className="font-body text-[1.0625rem] leading-relaxed text-ink-soft">
-              {word.example_en}
+              {word.example_en_gap}
             </p>
           )}
           {hints >= 2 && (

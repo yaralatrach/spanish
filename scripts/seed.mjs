@@ -75,6 +75,7 @@ const wordRows = words.map((w) => ({
   example_es: w.example ?? null,
   etymology_es: w.etymology ?? null,
   example_en: w.exampleEn ?? null,
+  example_en_gap: w.exampleEnGap ?? null,
 }));
 
 /**

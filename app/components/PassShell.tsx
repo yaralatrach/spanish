@@ -56,7 +56,9 @@ export function Verdict({ state }: { state: "right" | "wrong" | null }) {
         state === "right" ? "text-verde" : "text-rubric"
       }`}
     >
-      {state === "right" ? "Eso es." : "Todavía no. Mira la palabra y prueba otra vez."}
+      {state === "right"
+        ? "Eso es."
+        : "No es la palabra que practicamos. Puede que tu frase esté bien; esta busca otra."}
     </p>
   );
 }
