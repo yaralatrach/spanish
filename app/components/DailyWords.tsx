@@ -14,7 +14,6 @@ const TASKS = [
   "Escribe la definición en inglés.",
   "Explícala en español.",
   "Úsala en una frase.",
-  "Haz una foto de la hoja para cerrar el día.",
 ];
 
 const TOTAL_PASSES = 6;
@@ -141,7 +140,7 @@ export function DailyWords({
     return (
       <PassShell
         label="en papel"
-        title="Cuatro tareas por palabra"
+        title="Tres tareas por palabra"
         note="Lejos de la pantalla, a mano. La escritura es la mitad del método."
         position={5}
         total={TOTAL_PASSES}
@@ -154,11 +153,6 @@ export function DailyWords({
             </li>
           ))}
         </ol>
-
-        <p className="mt-6 font-body text-[0.9375rem] italic text-ink-faint">
-          La subida de la foto todavía no está hecha, así que por ahora el día
-          se cierra a mano.
-        </p>
 
         <div className="mt-10">
           <Primary

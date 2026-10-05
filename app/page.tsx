@@ -1,8 +1,9 @@
 import { DailyWords } from "@/app/components/DailyWords";
 import { JournalGate } from "@/app/components/JournalGate";
 import { PlacementTest } from "@/app/components/PlacementTest";
+import { Repaso } from "@/app/components/Repaso";
 import { SweepMode } from "@/app/components/SweepMode";
-import { serveWords, sweepBatch } from "@/app/lib/actions";
+import { dueWords, serveWords, sweepBatch } from "@/app/lib/actions";
 import { buildCloze } from "@/lib/cloze";
 import type { PracticeWord } from "@/lib/practice";
 import { db } from "@/lib/supabase";
@@ -18,7 +19,9 @@ export default async function Home() {
   const [{ data: session }, { data: profile }] = await Promise.all([
     db
       .from("sessions")
-      .select("journal_submitted_at, completed_at, pass_index, review_seen_at")
+      .select(
+        "journal_submitted_at, completed_at, pass_index, review_seen_at, repaso_done_at",
+      )
       .eq("day", day)
       .maybeSingle(),
     db
@@ -40,6 +43,13 @@ export default async function Home() {
       .from("words")
       .select("id", { count: "exact", head: true });
     return <SweepMode initialWords={batch} total={count ?? 0} />;
+  }
+
+  // Review comes before the day's new words: what is already half-known is
+  // worth more than what is not known at all.
+  if (!session.repaso_done_at && session.review_seen_at) {
+    const due = await dueWords();
+    if (due.length > 0) return <Repaso words={due} />;
   }
 
   // Only reached once the gate is written and the level is known, so serving

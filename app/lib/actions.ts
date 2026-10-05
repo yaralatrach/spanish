@@ -8,6 +8,8 @@ import { dueAfter, LAST_STEP } from "@/lib/srs";
 import { nextConfidence, type Outcome } from "@/lib/confidence";
 import { NEW_WORDS_PER_DAY, SWEEP_BATCH } from "@/lib/curriculum";
 import type { CurriculumWord } from "@/lib/words";
+import { buildCloze } from "@/lib/cloze";
+import { REVIEW_LIMIT, type DueWord } from "@/lib/repaso";
 import { todayInMadrid } from "@/lib/today";
 import {
   PLACEMENT_QUESTIONS,
@@ -444,4 +446,26 @@ export async function recordAttempt(
     },
     { onConflict: "word_id" },
   );
+}
+
+/** Words whose time has come, hardest-overdue first. */
+export async function dueWords(): Promise<DueWord[]> {
+  const { data, error } = await db.rpc("due_words", { p_limit: REVIEW_LIMIT });
+  if (error) throw new Error(error.message);
+
+  return ((data ?? []) as DueWord[]).map((word) => ({
+    ...word,
+    family: word.family ?? [],
+    cloze: word.example_es
+      ? buildCloze(word.example_es, [word.lemma])
+      : null,
+  }));
+}
+
+/** Marks review finished for today, so it is not repeated on a refresh. */
+export async function finishRepaso(): Promise<void> {
+  await db
+    .from("sessions")
+    .update({ repaso_done_at: new Date().toISOString() })
+    .eq("day", todayInMadrid());
 }

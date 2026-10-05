@@ -18,10 +18,17 @@ forced daily journal gate, and handwritten production tasks.
 3. **Review** of words that are due, before any new ones.
 4. **10 new words**, grouped by lemma family and theme rather than served in
    isolation.
-5. **Four production tasks per word**, on paper: English definition, explain it
-   in Spanish, use it in a sentence, then photograph the page to close the day.
+5. **Three production tasks per word**, on paper: English definition, explain
+   it in Spanish, use it in a sentence.
 
 Review ladder: 25 min → 1 day → 3 days → 1 week → 2 weeks → 1 month.
+
+The exercise is chosen by the rung, not at random, so each return is harder
+than the last: complete the sentence, then name the word from its definition,
+then from English alone, then use it unprompted. A rung whose content is
+missing falls back to producing a sentence. Review is capped at 20 a session —
+a backlog should not become a reason to skip the day — and covers only words
+that have actually been introduced.
 
 Picking and stamping the day's words happens inside Postgres, in
 `serve_daily_words`, so a refresh mid-introduction re-shows the same words
