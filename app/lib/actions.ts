@@ -458,14 +458,23 @@ export async function recordAttempt(
 
 /** Words whose time has come, hardest-overdue first. */
 export async function dueWords(): Promise<DueWord[]> {
-  const { data, error } = await db.rpc("due_words", { p_limit: REVIEW_LIMIT });
+  const { data, error } = await db.rpc("review_queue", {
+    p_limit: REVIEW_LIMIT,
+  });
   if (error) throw new Error(error.message);
 
-  return ((data ?? []) as DueWord[]).map((word) => ({
-    ...word,
-    family: word.family ?? [],
-    cloze: word.example_es
-      ? buildCloze(word.example_es, [word.lemma])
+  // The row arrives whole, as jsonb. The previous version listed columns by
+  // hand and silently dropped example_en_gap when it was added, which blanked
+  // the first hint in review; spreading the row cannot go stale that way.
+  type Row = { word: CurriculumWord; confidence: number; srs_step: number };
+
+  return ((data ?? []) as Row[]).map((row) => ({
+    ...row.word,
+    confidence: row.confidence,
+    srs_step: row.srs_step,
+    family: row.word.family ?? [],
+    cloze: row.word.example_es
+      ? buildCloze(row.word.example_es, [row.word.lemma])
       : null,
   }));
 }
