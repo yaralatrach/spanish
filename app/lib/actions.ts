@@ -349,3 +349,47 @@ export async function setPassIndex(index: number): Promise<ActionResult> {
   if (error) return { ok: false, error: error.message };
   return { ok: true };
 }
+
+/**
+ * Marks a word unknown from a clicked token in the reading passage. The token
+ * is resolved through the same form table the journal evidence rule uses, so
+ * clicking an inflected form finds its lemma.
+ */
+export async function markTokenUnknown(token: string): Promise<string | null> {
+  const lower = token.toLowerCase();
+
+  const { data } = await db
+    .from("word_forms")
+    .select("word_id, words(lemma)")
+    .or(`form.eq.${lower},form_folded.eq.${foldAccents(lower)}`)
+    .limit(1);
+
+  const row = data?.[0];
+  if (!row) return null;
+
+  const now = new Date().toISOString();
+  const { data: existing } = await db
+    .from("word_progress")
+    .select("known_source")
+    .eq("word_id", row.word_id)
+    .maybeSingle();
+
+  // Production still outranks a click, in either direction.
+  if (existing?.known_source === "free_writing") return null;
+
+  await db.from("word_progress").upsert(
+    {
+      word_id: row.word_id,
+      status: "learning",
+      known_source: null,
+      due_at: dueAfter(0).toISOString(),
+      srs_step: 0,
+      updated_at: now,
+    },
+    { onConflict: "word_id" },
+  );
+
+  revalidatePath("/");
+  const words = row.words as unknown as { lemma: string } | null;
+  return words?.lemma ?? null;
+}

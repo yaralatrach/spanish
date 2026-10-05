@@ -18,7 +18,7 @@ export default async function Home() {
   const [{ data: session }, { data: profile }] = await Promise.all([
     db
       .from("sessions")
-      .select("journal_submitted_at, completed_at, pass_index")
+      .select("journal_submitted_at, completed_at, pass_index, review_seen_at")
       .eq("day", day)
       .maybeSingle(),
     db
@@ -79,6 +79,7 @@ export default async function Home() {
       alreadyDone={Boolean(session.completed_at)}
       initialPass={session.pass_index ?? 0}
       initiallyNew={(progress ?? []).map((p) => p.word_id as number)}
+      reviewPending={!session.review_seen_at}
     />
   );
 }

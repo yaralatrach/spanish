@@ -166,6 +166,27 @@ Peninsular vocabulary — `enfadar` and `enfadado` together outnumber `enojar` i
 the subtitle corpus. A broad hand-lemmatised corpus would fix that; the
 treebanks cannot.
 
+## Journal correction and daily reading
+
+Both are optional and both need `ANTHROPIC_API_KEY`. Without it the app runs
+exactly as before — the correction and the passage are additions to the day,
+never conditions of it, and every failure path moves straight on rather than
+blocking.
+
+After the journal is saved it comes back corrected, with one line per error
+saying what and why, plus one thing done well. Accents are treated as errors
+rather than slips, because they are: the first real entry had `quede`, `cafe`,
+`despues`, `volvi` and `trabaje`.
+
+After the practice passes, a short passage built from the day's own words, in
+connected prose. Every word is tappable, and tapping one marks it unknown and
+schedules it — the reading half of the evidence rule, where writing a word
+counts for it and tapping one counts against.
+
+Both run on `claude-opus-5-5` at `low` effort and are cached on the session, so
+one entry is never corrected twice and one day never generates two passages.
+At one entry a day that is roughly $0.30 a month.
+
 ## Deliberate omissions
 
 - **No OCR.** Tesseract scores roughly 46% at word level on handwriting, which

@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 
+import { JournalReview } from "@/app/components/JournalReview";
+import { Lectura } from "@/app/components/Lectura";
 import { Completar, Producir, Reconocer } from "@/app/components/Passes";
 import { PassShell, Primary } from "@/app/components/PassShell";
 import { WordCard } from "@/app/components/WordCard";
@@ -15,7 +17,7 @@ const TASKS = [
   "Haz una foto de la hoja para cerrar el día.",
 ];
 
-const TOTAL_PASSES = 5;
+const TOTAL_PASSES = 6;
 
 export function DailyWords({
   words,
@@ -23,13 +25,16 @@ export function DailyWords({
   alreadyDone,
   initialPass,
   initiallyNew,
+  reviewPending,
 }: {
   words: PracticeWord[];
   level: string | null;
   alreadyDone: boolean;
   initialPass: number;
   initiallyNew: number[];
+  reviewPending: boolean;
 }) {
+  const [reviewing, setReviewing] = useState(reviewPending);
   const [pass, setPass] = useState(initialPass);
   const [decided, setDecided] = useState<Set<number>>(
     () => new Set(initiallyNew),
@@ -61,6 +66,11 @@ export function DailyWords({
     if (index === 2) return unknown.filter((w) => w.cloze);
     if (index === 3) return unknown;
     return [];
+  }
+
+  // The correction on what she just wrote comes before the day's words.
+  if (reviewing) {
+    return <JournalReview onDone={() => setReviewing(false)} />;
   }
 
   if (words.length === 0) {
@@ -117,11 +127,22 @@ export function DailyWords({
 
   if (pass === 4) {
     return (
+      <Lectura
+        lemmas={words.map((w) => w.lemma)}
+        position={4}
+        total={TOTAL_PASSES}
+        onDone={() => advanceFrom(4)}
+      />
+    );
+  }
+
+  if (pass === 5) {
+    return (
       <PassShell
         label="en papel"
         title="Cuatro tareas por palabra"
         note="Lejos de la pantalla, a mano. La escritura es la mitad del método."
-        position={4}
+        position={5}
         total={TOTAL_PASSES}
       >
         <ol className="flex flex-col gap-3">
