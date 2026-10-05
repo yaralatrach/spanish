@@ -118,5 +118,185 @@
     "en": "both",
     "example": "Ambos hermanos estudiaron en la misma escuela.",
     "etymology": "Del latín ambos, acusativo de ambo, «los dos»."
+  },
+  "actuar": {
+    "es": "Obrar, hacer algo con un fin determinado. También interpretar un papel en teatro, cine o música.",
+    "en": "to act; to perform",
+    "example": "Actuó con rapidez al ver el humo.",
+    "etymology": "Del latín actuare, de actus «acción»; de ahí acto, actor y actitud."
+  },
+  "encuentro": {
+    "es": "Hecho de coincidir dos o más personas, por casualidad o porque lo habían acordado. También un partido o una reunión.",
+    "en": "meeting, encounter; match",
+    "example": "Tuvimos un encuentro inesperado en la estación.",
+    "etymology": "De encontrar, del latín in contra, «frente a»."
+  },
+  "apoyo": {
+    "es": "Ayuda o respaldo que se da a alguien. También aquello sobre lo que descansa un objeto.",
+    "en": "support, backing",
+    "example": "Contó con el apoyo de toda su familia.",
+    "etymology": "De apoyar, del latín vulgar appodiare, de podium «base, pedestal»."
+  },
+  "sangre": {
+    "es": "Líquido rojo que circula por las venas y las arterias. También el parentesco de nacimiento.",
+    "en": "blood",
+    "example": "Le hicieron un análisis de sangre.",
+    "etymology": "Del latín sanguis; de ahí sangriento, desangrar y consanguíneo."
+  },
+  "lanzar": {
+    "es": "Arrojar algo con fuerza. También poner algo en marcha por primera vez, como un producto o una campaña.",
+    "en": "to throw; to launch",
+    "example": "Lanzó la pelota por encima del muro.",
+    "etymology": "Del latín lanceare «manejar la lanza», de lancea."
+  },
+  "pertenecer": {
+    "es": "Ser propiedad de alguien, o formar parte de un grupo o de un conjunto.",
+    "en": "to belong to",
+    "example": "Ese cuadro pertenece a mi abuela.",
+    "etymology": "Del latín tardío pertinere «extenderse hasta, concernir»; de ahí pertinente."
+  },
+  "posición": {
+    "es": "Lugar que ocupa algo o alguien. También la postura que se adopta ante un asunto.",
+    "en": "position; stance",
+    "example": "Defendió su posición con argumentos sólidos.",
+    "etymology": "Del latín positio, de ponere «poner»."
+  },
+  "soler": {
+    "es": "Tener costumbre de hacer algo. Solo se usa en presente e imperfecto, y siempre con un infinitivo detrás.",
+    "en": "to usually do something",
+    "example": "Suelo desayunar antes de las ocho.",
+    "etymology": "Del latín solere «acostumbrar»; de ahí insólito, «lo que no suele pasar»."
+  },
+  "prensa": {
+    "es": "Conjunto de los medios de comunicación escritos y de quienes trabajan en ellos. También la máquina que aprieta algo.",
+    "en": "the press; a press (machine)",
+    "example": "La noticia apareció en toda la prensa.",
+    "etymology": "Del catalán premsa, de prémer «apretar», del latín premere."
+  },
+  "conjunto": {
+    "es": "Grupo de elementos que se consideran juntos. También un grupo musical o una ropa que combina.",
+    "en": "set, group; outfit; band",
+    "example": "El conjunto de las pruebas apunta a lo mismo.",
+    "etymology": "Del latín coniunctus, de coniungere «unir»: con- + iungere «juntar»."
+  },
+  "duda": {
+    "es": "Falta de seguridad sobre algo; vacilación entre dos posibilidades.",
+    "en": "doubt",
+    "example": "No me cabe la menor duda.",
+    "etymology": "De dudar, del latín dubitare, de dubius «que va de dos maneras»."
+  },
+  "desarrollo": {
+    "es": "Proceso por el que algo crece, avanza o se perfecciona.",
+    "en": "development, growth",
+    "example": "El desarrollo del proyecto llevó dos años.",
+    "etymology": "De desarrollar: des- + rollo, literalmente «desenrollar» lo que estaba enrollado."
+  },
+  "voto": {
+    "es": "Expresión de la preferencia de alguien en una elección. También promesa solemne, sobre todo religiosa.",
+    "en": "vote; vow",
+    "example": "Su voto decidió el resultado.",
+    "etymology": "Del latín votum «promesa a los dioses», de vovere «prometer»; de ahí devoto."
+  },
+  "capaz": {
+    "es": "Que puede hacer algo o tiene aptitud para ello. También que tiene cabida para algo.",
+    "en": "capable, able",
+    "example": "Es capaz de aprender un idioma en un año.",
+    "etymology": "Del latín capax, de capere «coger, contener»; de ahí capacidad y caber."
+  },
+  "lleno": {
+    "es": "Que contiene todo lo que cabe en él. De una persona, que ya ha comido bastante.",
+    "en": "full",
+    "example": "El teatro estaba lleno.",
+    "etymology": "Del latín plenus «completo»; de ahí pleno, plenitud y rellenar."
+  },
+  "daño": {
+    "es": "Perjuicio o dolor causado a alguien o a algo.",
+    "en": "damage, harm",
+    "example": "La tormenta causó daños en el tejado.",
+    "etymology": "Del latín damnum «pérdida, perjuicio»; de ahí condenar e indemnizar."
+  },
+  "superar": {
+    "es": "Vencer una dificultad, o quedar por encima de algo o de alguien.",
+    "en": "to overcome; to exceed, to surpass",
+    "example": "Superó la entrevista sin ningún problema.",
+    "etymology": "Del latín superare, de super «por encima»."
+  },
+  "aumentar": {
+    "es": "Hacer que algo sea mayor en tamaño, cantidad o intensidad; o volverse mayor.",
+    "en": "to increase, to raise, to rise",
+    "example": "El precio del alquiler ha aumentado otra vez.",
+    "etymology": "Del latín augmentare, de augere «hacer crecer»; de ahí auge y aumento."
+  },
+  "electoral": {
+    "es": "Relativo a las elecciones y a quienes votan en ellas.",
+    "en": "electoral, election (as modifier)",
+    "example": "La campaña electoral dura dos semanas.",
+    "etymology": "De elector, del latín eligere «escoger»: e- «fuera» + legere «elegir»."
+  },
+  "andar": {
+    "es": "Moverse dando pasos. También funcionar una máquina, o estar de cierta manera: «anda muy ocupado».",
+    "en": "to walk; to go about; to work (of a machine)",
+    "example": "Anduvimos media hora hasta llegar al pueblo.",
+    "etymology": "Del latín vulgar ambitare, de ambire «ir alrededor»."
+  },
+  "juicio": {
+    "es": "Proceso ante un tribunal. También la capacidad de distinguir lo acertado de lo equivocado.",
+    "en": "trial; judgement",
+    "example": "El juicio empezará en marzo.",
+    "etymology": "Del latín iudicium, de iudex «juez»: ius «derecho» + dicere «decir»."
+  },
+  "bastar": {
+    "es": "Ser suficiente. Muy frecuente en «basta con que…» y en la exclamación «¡basta!».",
+    "en": "to be enough, to suffice",
+    "example": "Basta con que me avises un día antes.",
+    "etymology": "Del latín vulgar bastare «ser suficiente», del griego bastázein «sostener»."
+  },
+  "asesinato": {
+    "es": "Acto de matar a alguien de forma intencionada y con agravantes.",
+    "en": "murder, assassination",
+    "example": "La novela empieza con un asesinato.",
+    "etymology": "De asesino, del árabe hashshāshīn, nombre de una secta medieval."
+  },
+  "jornada": {
+    "es": "Duración del trabajo diario. También un día entero dedicado a algo, o una etapa de un viaje.",
+    "en": "working day; day's journey",
+    "example": "Trabaja media jornada los viernes.",
+    "etymology": "Del occitano jornada, de jorn «día», del latín diurnus."
+  },
+  "condado": {
+    "es": "División territorial de algunos países, sobre todo de habla inglesa. También el territorio de un conde.",
+    "en": "county",
+    "example": "El condado de Kent está al sureste de Inglaterra.",
+    "etymology": "De conde, del latín comes, comitis, «compañero», título de la corte imperial."
+  },
+  "marca": {
+    "es": "Señal que distingue algo. También el nombre comercial de un producto, y el mejor resultado en un deporte.",
+    "en": "mark; brand; record",
+    "example": "Batió la marca mundial en París.",
+    "etymology": "Del germánico mark «signo, límite»; de ahí marcar y comarca."
+  },
+  "negar": {
+    "es": "Decir que algo no es cierto. También no conceder lo que se pide.",
+    "en": "to deny; to refuse",
+    "example": "Negó haber estado allí esa noche.",
+    "etymology": "Del latín negare, de nec «no»; de ahí negativo y denegar."
+  },
+  "distrito": {
+    "es": "Cada una de las partes en que se divide una ciudad o un territorio para administrarlo.",
+    "en": "district",
+    "example": "Vive en el distrito de Chamberí.",
+    "etymology": "Del latín medieval districtus «territorio bajo una jurisdicción», de distringere «sujetar»."
+  },
+  "ruso": {
+    "es": "De Rusia o relacionado con ese país. También el idioma que allí se habla.",
+    "en": "Russian",
+    "example": "Estudia ruso desde hace dos años.",
+    "etymology": "De Rus, nombre medieval del pueblo eslavo oriental."
+  },
+  "atacar": {
+    "es": "Lanzarse contra alguien o algo para hacerle daño. También criticar con dureza, o empezar algo con energía.",
+    "en": "to attack",
+    "example": "El perro atacó sin avisar.",
+    "etymology": "Del italiano attaccare «unir, trabar»: trabar combate."
   }
 }
