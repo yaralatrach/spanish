@@ -77,6 +77,7 @@ const wordRows = words.map((w) => ({
   example_en: w.exampleEn ?? null,
   example_en_gap: w.exampleEnGap ?? null,
   examples: w.examples ?? [],
+  definition_es_masked: w.definitionMasked ?? null,
 }));
 
 /**

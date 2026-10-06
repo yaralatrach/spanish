@@ -29,6 +29,7 @@ export type CurriculumWord = {
   example_en: string | null;
   example_en_gap: string | null;
   examples: { es: string; en: string }[];
+  definition_es_masked: string | null;
   etymology_es: string | null;
   confidence?: number | null;
 };

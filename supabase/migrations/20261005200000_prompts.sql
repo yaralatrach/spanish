@@ -37,3 +37,9 @@ $$;
 -- pass. Deliberately not the cloze example: that sentence is the answer to
 -- another exercise, and seeing it here would hand it over.
 alter table words add column if not exists examples jsonb not null default '[]'::jsonb;
+
+-- The definition with any form of its own word blanked, for the recognition
+-- exercise. A definition that contains the word answers the question it is
+-- asking: «En España, "vale" se usa constantemente» gives away valer. Derived
+-- from each word's attested forms, so «cuyas» is caught for cuyo.
+alter table words add column if not exists definition_es_masked text;

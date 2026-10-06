@@ -53,8 +53,10 @@ export function Reconocer({
       <p className="label tabular-nums">
         {i + 1} de {words.length}
       </p>
+      {/* The masked copy: a definition containing its own word answers the
+          question. «En España, "vale" se usa constantemente» gave away valer. */}
       <p className="mt-3 font-body text-[1.25rem] leading-relaxed">
-        {word.definition_es}
+        {word.definition_es_masked ?? word.definition_es}
       </p>
 
       <div className="mt-8 flex flex-wrap gap-2.5">
