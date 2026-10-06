@@ -43,3 +43,26 @@ alter table words add column if not exists examples jsonb not null default '[]':
 -- asking: «En España, "vale" se usa constantemente» gives away valer. Derived
 -- from each word's attested forms, so «cuyas» is caught for cuyo.
 alter table words add column if not exists definition_es_masked text;
+
+-- Review resumes rather than restarting. Words attempted today drop out of the
+-- queue, which also stops a failed word -- rescheduled 25 minutes out -- from
+-- returning inside a single long sitting.
+create or replace function review_queue(p_limit integer default 20)
+returns table (word jsonb, confidence integer, srs_step integer)
+language sql
+as $$
+  select to_jsonb(w), p.confidence, p.srs_step
+  from word_progress p
+  join words w on w.id = p.word_id
+  where p.due_at is not null
+    and p.due_at <= now()
+    and p.status <> 'known'
+    and w.introduced_on is not null
+    and not exists (
+      select 1 from attempts a
+      where a.word_id = p.word_id
+        and a.day = (now() at time zone 'Europe/Madrid')::date
+    )
+  order by p.due_at
+  limit p_limit;
+$$;

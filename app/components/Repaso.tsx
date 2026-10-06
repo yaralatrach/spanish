@@ -30,12 +30,16 @@ export function Repaso({ words }: { words: DueWord[] }) {
 
   const [phase, setPhase] = useState(0);
 
+  function done() {
+    void finishRepaso().then(() => router.refresh());
+  }
+
   function advance() {
     if (phase + 1 < groups.length) {
       setPhase(phase + 1);
       if (typeof window !== "undefined") window.scrollTo({ top: 0 });
     } else {
-      void finishRepaso().then(() => router.refresh());
+      done();
     }
   }
 
@@ -44,8 +48,8 @@ export function Repaso({ words }: { words: DueWord[] }) {
   const group = groups[phase];
   const total = groups.length;
 
-  if (group.exercise === "completar") {
-    return (
+  const body =
+    group.exercise === "completar" ? (
       <Completar
         words={group.words}
         batch={words}
@@ -53,11 +57,7 @@ export function Repaso({ words }: { words: DueWord[] }) {
         total={total}
         onDone={advance}
       />
-    );
-  }
-
-  if (group.exercise === "reconocer") {
-    return (
+    ) : group.exercise === "reconocer" ? (
       <Reconocer
         words={group.words}
         batch={words}
@@ -65,22 +65,44 @@ export function Repaso({ words }: { words: DueWord[] }) {
         total={total}
         onDone={advance}
       />
+    ) : group.exercise === "traducir" ? (
+      <TraducirGroup
+        words={group.words}
+        position={phase}
+        total={total}
+        onDone={advance}
+      />
+    ) : (
+      <Producir
+        words={group.words}
+        position={phase}
+        total={total}
+        onDone={advance}
+      />
     );
-  }
-
-  if (group.exercise === "traducir") {
-    return (
-      <TraducirGroup words={group.words} position={phase} total={total} onDone={advance} />
-    );
-  }
 
   return (
-    <Producir
-      words={group.words}
-      position={phase}
-      total={total}
-      onDone={advance}
-    />
+    <>
+      {body}
+
+      {/* Review sits in front of the day's new words, so without a way out it
+          becomes a gate that can never be cleared: a backlog of twenty means
+          never reaching the new words at all. What is left stays due. */}
+      <div className="mt-14 flex flex-wrap items-baseline justify-between gap-3 border-t border-rule pt-6">
+        <p className="font-body text-[0.875rem] italic text-ink-faint">
+          Te quedan {words.length}{" "}
+          {words.length === 1 ? "palabra" : "palabras"} de repaso. Lo que no
+          hagas sigue pendiente.
+        </p>
+        <button
+          type="button"
+          onClick={done}
+          className="py-2 font-body text-[0.9375rem] italic text-ink-soft underline decoration-rule underline-offset-4 transition-colors hover:text-rubric"
+        >
+          dejar el repaso por hoy
+        </button>
+      </div>
+    </>
   );
 }
 
