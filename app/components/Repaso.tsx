@@ -9,7 +9,9 @@ import { Traducir } from "@/app/components/Traducir";
 import { finishRepaso } from "@/app/lib/actions";
 import { exerciseFor, type DueWord, type Exercise } from "@/lib/repaso";
 
-const ORDER: Exercise[] = ["completar", "reconocer", "traducir", "producir"];
+// Groups run easiest first, matching the ladder, so a session warms up
+// instead of opening on free recall.
+const ORDER: Exercise[] = ["reconocer", "completar", "traducir", "producir"];
 
 /**
  * Review, before the day's new words. Words are grouped by the exercise their

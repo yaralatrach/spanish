@@ -125,13 +125,15 @@ export function Completar({
 
   const word = words[i];
   const cloze = word.cloze;
-  const answer = cloze?.answer.toLowerCase() ?? word.lemma;
   const options = useStableOptions(word, batch);
 
-  // Meaning of the whole sentence, then a shortlist, then the shape of the
-  // word. Not understanding the sentence is the thing that blocks her, so it
-  // is what the first hint removes.
-  const HINTS = 3;
+  // Two hints, then the answer. The sentence in English first, because not
+  // understanding the sentence is what actually blocks her, then a shortlist.
+  //
+  // There was a third rung showing the first letter and the length, and it
+  // was worthless: next to a shortlist of four, "starts with t" is the whole
+  // puzzle. A hint that only narrows an existing hint is not a hint.
+  const HINTS = 2;
 
   async function check() {
     if (!value.trim() || checking) return;
@@ -234,7 +236,6 @@ export function Completar({
               </div>
             </div>
           )}
-          {hints >= 3 && <Skeleton answer={answer} />}
         </div>
       )}
 
@@ -274,23 +275,6 @@ export function Completar({
         )}
       </div>
     </PassShell>
-  );
-}
-
-/** First letter and length: the shape of the word, without the word. */
-function Skeleton({ answer }: { answer: string }) {
-  const letters = [...answer];
-  return (
-    <p className="font-display text-[1.25rem] tracking-[0.3em] text-ink">
-      {letters[0]}
-      {letters
-        .slice(1)
-        .map((c) => (/[\p{L}\p{M}]/u.test(c) ? "·" : c))
-        .join("")}
-      <span className="ml-3 font-body text-[0.875rem] tracking-normal text-ink-faint">
-        {letters.length} letras
-      </span>
-    </p>
   );
 }
 
