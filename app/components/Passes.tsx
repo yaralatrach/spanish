@@ -373,6 +373,17 @@ export function Producir({
         </p>
       )}
 
+      {word.examples?.length > 0 && (
+        <div className="mt-6">
+          <p className="label">así se usa</p>
+          <div className="mt-3 flex flex-col gap-4">
+            {word.examples.map((example) => (
+              <ExampleLine key={example.es} example={example} />
+            ))}
+          </div>
+        </div>
+      )}
+
       <textarea
         value={value}
         onChange={(e) => setValue(e.target.value)}
@@ -420,6 +431,36 @@ export function Producir({
         )}
       </div>
     </PassShell>
+  );
+}
+
+/**
+ * One example, Spanish first, with its translation behind a tap. Reading the
+ * Spanish and only then checking is the point; showing both at once turns it
+ * into a bilingual list she skims in English.
+ */
+function ExampleLine({ example }: { example: { es: string; en: string } }) {
+  const [shown, setShown] = useState(false);
+
+  return (
+    <div className="border-l-2 border-rule pl-4">
+      <p className="font-body text-[1.0625rem] italic leading-relaxed">
+        {example.es}
+      </p>
+      {shown ? (
+        <p className="mt-1 font-body text-[0.9375rem] leading-relaxed text-ink-soft">
+          {example.en}
+        </p>
+      ) : (
+        <button
+          type="button"
+          onClick={() => setShown(true)}
+          className="mt-1 py-1 font-body text-[0.875rem] italic text-ink-faint underline decoration-rule underline-offset-4 transition-colors hover:text-rubric"
+        >
+          en inglés
+        </button>
+      )}
+    </div>
   );
 }
 

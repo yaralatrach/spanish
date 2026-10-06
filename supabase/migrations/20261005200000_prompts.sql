@@ -32,3 +32,8 @@ as $$
   order by p.due_at
   limit p_limit;
 $$;
+
+-- Extra example sentences with their translations, shown on the production
+-- pass. Deliberately not the cloze example: that sentence is the answer to
+-- another exercise, and seeing it here would hand it over.
+alter table words add column if not exists examples jsonb not null default '[]'::jsonb;
